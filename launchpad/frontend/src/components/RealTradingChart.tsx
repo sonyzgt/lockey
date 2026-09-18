@@ -591,7 +591,7 @@ export function RealTradingChart({
         {trades.length === 0 && (
           <div className="absolute inset-x-0 bottom-4 flex justify-center pointer-events-none">
             <span className="sketch-badge px-3 py-1 text-[11px] font-mono text-emerald-300">
-              Floor Price Initialized • Siap Ditradingkan
+              Floor Price Initialized • Ready to Trade
             </span>
           </div>
         )}

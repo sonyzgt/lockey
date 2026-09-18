@@ -153,7 +153,7 @@ function ToastCard({ item, onDismiss }: { item: ToastItem; onDismiss: () => void
                 rel="noreferrer"
                 className="inline-flex items-center space-x-1.5 text-[11px] font-mono font-bold text-emerald-400 hover:text-emerald-300 underline decoration-emerald-500/40 hover:decoration-emerald-400 transition"
               >
-                <span>Lihat di Robinhood Explorer</span>
+                <span>View on Robinhood Explorer</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
             </div>

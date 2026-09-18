@@ -173,7 +173,7 @@ export default function HomePage() {
     if (!isAddress(importAddress.trim())) {
       setImportStatus({
         type: "error",
-        message: "Alamat token tidak valid (harus format 0x... 42 karakter).",
+        message: "Invalid token address (must be a 42-character 0x... address).",
       });
       return;
     }
@@ -181,7 +181,7 @@ export default function HomePage() {
     if (!publicClient) {
       setImportStatus({
         type: "error",
-        message: "RPC Client belum siap. Coba muat ulang halaman.",
+        message: "RPC Client is not ready. Please reload the page.",
       });
       return;
     }
@@ -202,7 +202,7 @@ export default function HomePage() {
       if (!launchedData || !launchedData.exists) {
         setImportStatus({
           type: "error",
-          message: "Token ini tidak ditemukan di Pons Factory pada Robinhood Chain.",
+          message: "This token was not found on Pons Factory on Robinhood Chain.",
         });
         return;
       }
@@ -262,13 +262,13 @@ export default function HomePage() {
 
       setImportStatus({
         type: "success",
-        message: `Token ${name || symbol || targetAddr.slice(0, 6)} berhasil ditambahkan ke explorer!`,
+        message: `Token ${name || symbol || targetAddr.slice(0, 6)} successfully added to explorer!`,
       });
 
       setImportAddress("");
       await fetchLaunches();
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Gagal memverifikasi token di Robinhood Chain.";
+      const msg = err instanceof Error ? err.message : "Failed to verify token on Robinhood Chain.";
       setImportStatus({
         type: "error",
         message: msg,
@@ -311,7 +311,7 @@ export default function HomePage() {
                 </span>
               </div>
               <p className="text-sm font-hand text-emerald-200/90 mt-1">
-                Token meme resmi yang diluncurkan via Vana Launchpad • Pons v2 di Robinhood Chain
+                Official meme tokens launched via Vana Launchpad • Pons v2 on Robinhood Chain
               </p>
             </div>
           </div>
@@ -322,7 +322,7 @@ export default function HomePage() {
               <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-400" />
               <input
                 type="text"
-                placeholder="Cari token, ticker, alamat..."
+                placeholder="Search token, ticker, address..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 sketch-inset text-sm font-hand text-slate-100 placeholder:text-emerald-400/50 focus:outline-none"
@@ -368,7 +368,7 @@ export default function HomePage() {
             }`}
           >
             <Sparkles className="w-4 h-4 text-emerald-300" />
-            <span>Semua Token ({launchedTokens.length})</span>
+            <span>All Tokens ({launchedTokens.length})</span>
           </button>
 
           <button
@@ -404,7 +404,7 @@ export default function HomePage() {
             }`}
           >
             <Clock className="w-4 h-4 text-emerald-400" />
-            <span>Terbaru</span>
+            <span>Newest</span>
           </button>
         </div>
 
@@ -412,7 +412,7 @@ export default function HomePage() {
         {isLoading ? (
           <div className="py-20 text-center space-y-3">
             <Loader2 className="w-8 h-8 text-emerald-400 animate-spin mx-auto" />
-            <p className="text-base font-hand text-emerald-300">Sedang memuat token dari Robinhood Chain...</p>
+            <p className="text-base font-hand text-emerald-300">Loading tokens from Robinhood Chain...</p>
           </div>
         ) : filteredTokens.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -432,9 +432,9 @@ export default function HomePage() {
               <img src="/vana-logo.png" alt="VANA" className="w-full h-full object-cover rounded-sketch" />
             </div>
             <div>
-              <div className="text-white font-kalam font-bold text-2xl">Belum Ada Token di Vana Explorer</div>
+              <div className="text-white font-kalam font-bold text-2xl">No Tokens in Vana Explorer Yet</div>
               <p className="text-sm font-hand text-emerald-200/80 max-w-md mx-auto leading-relaxed mt-2">
-                Explorer ini khusus menampilkan token yang diluncurkan lewat website ini. Jadilah kreator pertama yang meluncurkan token meme Anda di Pons v2!
+                This explorer exclusively showcases tokens launched via this platform. Be the first creator to deploy your meme token on Pons v2!
               </p>
             </div>
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -442,7 +442,7 @@ export default function HomePage() {
                 href="/create"
                 className="inline-flex items-center space-x-2 px-6 py-3 sketch-btn-primary text-slate-950 font-bold text-lg"
               >
-                <span>Luncurkan Token Pertama</span>
+                <span>Launch First Token</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <button
@@ -450,7 +450,7 @@ export default function HomePage() {
                 className="inline-flex items-center space-x-2 px-5 py-3 sketch-btn-secondary text-emerald-200 font-bold text-base"
               >
                 <BookmarkPlus className="w-4 h-4 text-emerald-400" />
-                <span>Track Token Yang Sudah Ada</span>
+                <span>Track Existing Token</span>
               </button>
             </div>
           </div>
@@ -482,13 +482,13 @@ export default function HomePage() {
             </div>
 
             <p className="text-sm font-hand text-emerald-200 leading-relaxed">
-              Pernah meluncurkan token di Robinhood Chain via Pons Factory dan ingin menampilkannya di explorer website ini? Masukkan alamat kontrak token di bawah.
+              Launched a token on Robinhood Chain via Pons Factory and want to track it on this explorer? Enter the token contract address below.
             </p>
 
             <form onSubmit={handleImportToken} className="space-y-4">
               <div className="space-y-1.5">
                 <label className="text-sm font-hand font-bold text-emerald-200">
-                  Alamat Kontrak Token (0x...)
+                  Token Contract Address (0x...)
                 </label>
                 <input
                   type="text"
@@ -522,7 +522,7 @@ export default function HomePage() {
                   onClick={() => setIsImportModalOpen(false)}
                   className="px-4 py-2 sketch-btn-secondary text-sm font-hand font-bold"
                 >
-                  Batal
+                  Cancel
                 </button>
                 <button
                   type="submit"
@@ -532,10 +532,10 @@ export default function HomePage() {
                   {isImporting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Memverifikasi...</span>
+                      <span>Verifying...</span>
                     </>
                   ) : (
-                    <span>Tambahkan ke Explorer</span>
+                    <span>Add to Explorer</span>
                   )}
                 </button>
               </div>
@@ -698,7 +698,7 @@ function TokenCard({
       {/* Stats - Hand-drawn Ledger Note Box in Emerald */}
       <div className="grid grid-cols-2 gap-2 pt-1 border-t-2 border-dashed border-emerald-800/80 text-xs">
         <div className="p-2 sketch-surface bg-[#0c2d1b]">
-          <span className="text-[11px] font-hand text-emerald-300/80 uppercase tracking-wider block">Harga Token</span>
+          <span className="text-[11px] font-hand text-emerald-300/80 uppercase tracking-wider block">Token Price</span>
           <span className="font-mono font-bold text-white text-xs truncate block">
             {priceEth ? formatUsd(priceEth * ethPriceUsd) : "$0.00"}
           </span>
@@ -720,7 +720,7 @@ function TokenCard({
       {/* Progress Bar - Hatched Hand-Drawn Emerald Progress Meter */}
       <div className="space-y-1.5 pt-1">
         <div className="flex justify-between items-center text-xs font-hand font-bold">
-          <span className="text-emerald-200">Target Kelulusan (4.2 ETH)</span>
+          <span className="text-emerald-200">Graduation Target (4.2 ETH)</span>
           <span className="text-emerald-300 font-mono">{progressPercent.toFixed(1)}%</span>
         </div>
         <div className="w-full h-3 bg-[#041208] rounded-sketch border-2 border-emerald-700/80 overflow-hidden">

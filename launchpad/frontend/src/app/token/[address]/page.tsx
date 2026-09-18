@@ -321,9 +321,9 @@ export default function TokenDetailPage() {
     return (
       <div className="max-w-2xl mx-auto py-20 text-center space-y-4 sketch-card p-8">
         <AlertCircle className="w-12 h-12 text-yellow-400 mx-auto" />
-        <h2 className="text-3xl font-kalam font-bold text-white">Token Tidak Ditemukan</h2>
+        <h2 className="text-3xl font-kalam font-bold text-white">Token Not Found</h2>
         <p className="text-sm font-hand text-slate-400">
-          Alamat <span className="font-mono text-sky-400">{tokenAddress}</span> bukan token valid yang diluncurkan melalui Pons v2 di Robinhood Chain.
+          Address <span className="font-mono text-sky-400">{tokenAddress}</span> is not a valid token launched via Pons v2 on Robinhood Chain.
         </p>
       </div>
     );
@@ -405,7 +405,7 @@ export default function TokenDetailPage() {
         {/* Quick Stats in Hand-Drawn Ticket Format */}
         <div className="flex flex-wrap items-center gap-3 shrink-0">
           <div className="p-3 sketch-surface rounded-sketch text-right">
-            <span className="text-[11px] font-hand text-slate-400 uppercase tracking-wider block">Harga</span>
+            <span className="text-[11px] font-hand text-slate-400 uppercase tracking-wider block">Price</span>
             <span className="font-mono text-sm sm:text-base font-bold text-white block">
               {currentPriceEth ? formatUsd(currentPriceEth * ethPriceUsd) : "$0.00"}
             </span>
@@ -439,7 +439,7 @@ export default function TokenDetailPage() {
         <div className="flex justify-between items-center text-sm font-hand font-bold">
           <span className="text-slate-200 uppercase tracking-wider flex items-center space-x-2">
             <TrendingUp className="w-5 h-5 text-emerald-400" />
-            <span>Target Kelulusan Curve ({progressPercent.toFixed(1)}%)</span>
+            <span>Curve Graduation Target ({progressPercent.toFixed(1)}%)</span>
           </span>
           <span className="font-mono text-emerald-300">
             {realQuote ? `${Number(formatUnits(realQuote, 18)).toFixed(3)} ETH` : "0.000 ETH"} / {thresholdEth} ETH Target ({formatUsd(thresholdEth * ethPriceUsd)})
@@ -452,7 +452,7 @@ export default function TokenDetailPage() {
           />
         </div>
         <div className="flex justify-between text-xs font-hand text-slate-400">
-          <span>Saat curve mengumpulkan {thresholdEth} ETH ({formatUsd(thresholdEth * ethPriceUsd)}), 100% likuiditas akan otomatis dimigrasikan & dikunci di Uniswap v4.</span>
+          <span>When the curve accumulates {thresholdEth} ETH ({formatUsd(thresholdEth * ethPriceUsd)}), 100% of liquidity will automatically migrate &amp; lock into Uniswap v4.</span>
           {isSweptWaitingPool && (
             <button
               type="button"
@@ -460,7 +460,7 @@ export default function TokenDetailPage() {
               disabled={isGraduating || isWaitingGraduateTx}
               className="text-emerald-300 hover:text-emerald-200 underline font-bold"
             >
-              {isGraduating || isWaitingGraduateTx ? "Memproses migrasi pool..." : "Klik untuk push pool Uniswap v4"}
+              {isGraduating || isWaitingGraduateTx ? "Migrating liquidity pool..." : "Click to push Uniswap v4 pool"}
             </button>
           )}
         </div>
@@ -499,7 +499,7 @@ export default function TokenDetailPage() {
                   activeTab === "buy" ? "sketch-btn-primary text-slate-950 font-bold" : "text-slate-400 hover:text-white"
                 }`}
               >
-                Beli {tokenSymbol || "Token"}
+                Buy {tokenSymbol || "Token"}
               </button>
               <button
                 type="button"
@@ -508,14 +508,14 @@ export default function TokenDetailPage() {
                   activeTab === "sell" ? "sketch-btn-primary text-slate-950 font-bold" : "text-slate-400 hover:text-white"
                 }`}
               >
-                Jual {tokenSymbol || "Token"}
+                Sell {tokenSymbol || "Token"}
               </button>
             </div>
           </div>
 
           {/* Balance info */}
           <div className="flex items-center justify-between text-xs font-hand text-slate-400">
-            <span>Saldo Anda:</span>
+            <span>Your Balance:</span>
             <span className="font-mono text-slate-200 font-bold">
               {activeTab === "buy"
                 ? `${userEthBalance ? Number(formatUnits(userEthBalance.value, 18)).toFixed(4) : "0.00"} ETH`
@@ -576,7 +576,7 @@ export default function TokenDetailPage() {
           {/* Quote breakdown in Hand-Drawn Receipt Note */}
           <div className="p-4 sketch-surface space-y-2 text-xs font-hand rounded-sketch">
             <div className="flex justify-between items-center text-slate-300">
-              <span>Estimasi Diterima:</span>
+              <span>Estimated Output:</span>
               <span className="font-mono font-bold text-emerald-400 text-sm">
                 {activeTab === "buy"
                   ? `${Number(formatUnits(quoteResult.output, 18)).toLocaleString()} ${tokenSymbol || "TOKEN"}`
@@ -584,14 +584,14 @@ export default function TokenDetailPage() {
               </span>
             </div>
             <div className="flex justify-between items-center text-slate-400">
-              <span>Biaya Curve (1%):</span>
+              <span>Curve Fee (1%):</span>
               <span className="font-mono text-slate-300">
                 {Number(formatUnits(quoteResult.fee, 18)).toFixed(6)} ETH
               </span>
             </div>
             {creatorTaxBps !== undefined && creatorTaxBps > 0n && (
               <div className="flex justify-between items-center text-slate-400">
-                <span>Royalti Kreator ({(Number(creatorTaxBps) / 100).toFixed(1)}%):</span>
+                <span>Creator Royalty ({(Number(creatorTaxBps) / 100).toFixed(1)}%):</span>
                 <span className="font-mono text-emerald-300">
                   {Number(formatUnits(quoteResult.tax, 18)).toFixed(6)} ETH
                 </span>
@@ -618,10 +618,10 @@ export default function TokenDetailPage() {
               {isApproving || isWaitingApproveTx ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Menyetujui {tokenSymbol}...</span>
+                  <span>Approving {tokenSymbol}...</span>
                 </>
               ) : (
-                <span>Approve {tokenSymbol} untuk Menjual</span>
+                <span>Approve {tokenSymbol} to Sell</span>
               )}
             </button>
           ) : (
@@ -643,16 +643,16 @@ export default function TokenDetailPage() {
               {isTrading || isWaitingTradeTx ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Memproses {activeTab === "buy" ? "Pembelian" : "Penjualan"}...</span>
+                  <span>Processing {activeTab === "buy" ? "Purchase" : "Sale"}...</span>
                 </>
               ) : !isConnected ? (
-                <span>Hubungkan Wallet</span>
+                <span>Connect Wallet</span>
               ) : isTradingOnV4 ? (
-                <span>Lulus ke Uniswap v4</span>
+                <span>Graduated to Uniswap v4</span>
               ) : (
                 <>
                   <ArrowDownUp className="w-5 h-5" />
-                  <span>{activeTab === "buy" ? "Beli dengan ETH" : `Jual ${tokenSymbol || "Token"}`}</span>
+                  <span>{activeTab === "buy" ? "Buy with ETH" : `Sell ${tokenSymbol || "Token"}`}</span>
                 </>
               )}
             </button>
@@ -661,7 +661,7 @@ export default function TokenDetailPage() {
           {tradeError && (
             <p className="text-xs font-hand text-rose-400 flex items-start space-x-1.5 leading-relaxed">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-              <span>{tradeError.message?.split("\n")[0] || "Transaksi gagal."}</span>
+              <span>{tradeError.message?.split("\n")[0] || "Transaction failed."}</span>
             </p>
           )}
         </div>

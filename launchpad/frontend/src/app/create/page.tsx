@@ -283,17 +283,30 @@ export default function CreateTokenPage() {
       if (parsedDevBuy > 0n) {
         writeContract({
           address: CONTRACT_ADDRESSES.launchAndBuy,
-          abi: PONS_LAUNCH_AND_BUY_ROUTER_ABI,
+          abi: PONS_ROUTER_ABI,
           functionName: "launchAndBuy",
-          args: [tokenParams, parsedDevBuy, 0n, address],
-          value: parsedDevBuy,
+          args: [
+            tokenParams,
+            0n, // launchConfigId 0 (Standard fixed supply)
+            "0x0000000000000000000000000000000000000000", // native ETH pairToken
+            parsedDevBuy,
+            0n, // minTokensOut
+            address, // recipient
+            [], // extra snipe exemptions
+          ],
+          value: totalRequiredEth,
         });
       } else {
         writeContract({
           address: CONTRACT_ADDRESSES.factory,
           abi: PONS_FACTORY_ABI,
           functionName: "launchToken",
-          args: [tokenParams],
+          args: [
+            tokenParams,
+            0n,
+            "0x0000000000000000000000000000000000000000",
+          ],
+          value: currentLaunchFee,
         });
       }
     } catch (err: unknown) {
@@ -313,11 +326,11 @@ export default function CreateTokenPage() {
           <span>Creator&apos;s Blueprint • Pons v2 on Robinhood Chain</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-kalam font-bold text-white tracking-wide flex items-center space-x-2">
-          <span>Luncurkan Token Meme</span>
+          <span>Launch Meme Token</span>
           <span className="text-3xl">🚀</span>
         </h1>
         <p className="text-base font-hand text-emerald-200/90">
-          Deploy token dengan kurva bonding otomatis & migrasi likuiditas ke Uniswap v4 di Robinhood Chain (Zero-Rug Guarantee).
+          Deploy token with automated bonding curve & liquidity migration to Uniswap v4 on Robinhood Chain (Zero-Rug Guarantee).
         </p>
       </div>
 
@@ -330,12 +343,12 @@ export default function CreateTokenPage() {
           <div className="space-y-5">
             <div>
               <label className="block text-base font-hand font-bold text-slate-200 mb-1">
-                Nama Token *
+                Token Name *
               </label>
               <input
                 type="text"
                 required
-                placeholder="Contoh: Robinhood Doge"
+                placeholder="e.g. Robinhood Doge"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-2.5 sketch-inset text-sm font-hand text-white placeholder:text-slate-500 focus:outline-none"
@@ -344,12 +357,12 @@ export default function CreateTokenPage() {
 
             <div>
               <label className="block text-base font-hand font-bold text-slate-200 mb-1">
-                Simbol Ticker *
+                Ticker Symbol *
               </label>
               <input
                 type="text"
                 required
-                placeholder="Contoh: RDOGE"
+                placeholder="e.g. RDOGE"
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
                 className="w-full px-4 py-2.5 sketch-inset text-sm text-white uppercase font-mono placeholder:text-slate-500 focus:outline-none"
@@ -360,7 +373,7 @@ export default function CreateTokenPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label className="block text-base font-hand font-bold text-slate-200">
-                  Royalti Trading Kreator *
+                  Creator Trading Royalty *
                 </label>
                 <span className="text-sm font-mono text-yellow-300 font-bold">
                   {creatorFeePercent}% ({creatorFeePercent * 100} bps)
@@ -368,7 +381,7 @@ export default function CreateTokenPage() {
               </div>
               
               <p className="text-xs font-hand text-slate-400">
-                Royalti otomatis yang masuk ke wallet Anda dari setiap transaksi jual & beli di bonding curve (maks 10%):
+                Automated royalties transferred to your wallet on every buy & sell trade across the bonding curve (max 10%):
               </p>
 
               <div className="grid grid-cols-5 gap-2.5 pt-1">
@@ -398,7 +411,7 @@ export default function CreateTokenPage() {
               <div className="space-y-0.5">
                 <span className="text-sm font-hand font-bold text-white block">Auto Buyback & 5-Year Vesting</span>
                 <span className="text-xs font-hand text-slate-400 block">
-                  Sebagian trading fee digunakan untuk buyback token & dikunci vesting 5 tahun.
+                  A portion of trading fees is used for token buyback & locked in 5-year vesting.
                 </span>
               </div>
               <input
@@ -411,11 +424,11 @@ export default function CreateTokenPage() {
 
             <div>
               <label className="block text-base font-hand font-bold text-slate-200 mb-1">
-                Deskripsi Proyek (Opsional)
+                Project Description (Optional)
               </label>
               <textarea
                 rows={3}
-                placeholder="Ceritakan tentang token meme dan visi komunitas Anda..."
+                placeholder="Tell the story of your meme token and community vision..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full px-4 py-2.5 sketch-inset text-sm font-hand text-white placeholder:text-slate-500 focus:outline-none"
@@ -426,7 +439,7 @@ export default function CreateTokenPage() {
             <div>
               <div className="flex items-center justify-between mb-1">
                 <label className="block text-base font-hand font-bold text-slate-200">
-                  Logo / Gambar Token (IPFS)
+                  Token Logo / Image (IPFS)
                 </label>
                 {imageUrl && (
                   <span className="text-xs font-hand text-emerald-400 font-bold flex items-center space-x-1">
@@ -459,7 +472,7 @@ export default function CreateTokenPage() {
                     {isUploadingImage ? (
                       <p className="text-xs font-hand text-sky-300 flex items-center space-x-1">
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                        <span>Mengupload ke IPFS Pinata...</span>
+                        <span>Uploading to IPFS Pinata...</span>
                       </p>
                     ) : imageUrl ? (
                       <p className="text-[11px] font-mono text-emerald-400 truncate">
@@ -473,7 +486,7 @@ export default function CreateTokenPage() {
                     onClick={handleRemoveImage}
                     disabled={isUploadingImage}
                     className="p-1.5 sketch-btn-secondary text-slate-400 hover:text-rose-400"
-                    title="Hapus gambar"
+                    title="Remove image"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -502,10 +515,10 @@ export default function CreateTokenPage() {
                     </div>
                     <div className="space-y-0.5">
                       <p className="text-base font-hand font-bold text-white">
-                        Tarik gambar logo ke sini, atau <span className="text-sky-400 underline">pilih berkas</span>
+                        Drag &amp; drop logo image here, or <span className="text-sky-400 underline">browse files</span>
                       </p>
                       <p className="text-xs font-hand text-slate-400">
-                        PNG, JPG, WebP, GIF max 5MB (otomatis dipin ke IPFS)
+                        PNG, JPG, WebP, GIF up to 5MB (automatically pinned to IPFS)
                       </p>
                     </div>
                   </div>
@@ -523,7 +536,7 @@ export default function CreateTokenPage() {
             {/* Social Links */}
             <div className="space-y-3 pt-2">
               <label className="block text-base font-hand font-bold text-slate-200">
-                Sosial Media & Tautan Komunitas
+                Social Links &amp; Community
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="relative">
@@ -574,15 +587,15 @@ export default function CreateTokenPage() {
               <div className="flex items-center justify-between">
                 <label className="text-base font-hand font-bold text-slate-200 flex items-center space-x-1.5">
                   <Coins className="w-4 h-4 text-yellow-300" />
-                  <span>Initial Dev Buy (Opsional)</span>
+                  <span>Initial Dev Buy (Optional)</span>
                 </label>
                 <span className="text-xs text-slate-400 font-mono">
-                  Saldo: {userEthBalance ? `${Number(formatUnits(userEthBalance.value, 18)).toFixed(4)} ETH` : "0.00 ETH"}
+                  Balance: {userEthBalance ? `${Number(formatUnits(userEthBalance.value, 18)).toFixed(4)} ETH` : "0.00 ETH"}
                 </span>
               </div>
               
               <p className="text-xs font-hand text-slate-400 leading-relaxed">
-                Beli token sekaligus di transaksi pembuatan via router atomik <code>launchAndBuy</code> Pons v2 (bebas snipe tax).
+                Purchase tokens atomically during deployment via Pons v2 <code>launchAndBuy</code> router (snipe tax free).
               </p>
 
               <div className="relative">
@@ -617,7 +630,7 @@ export default function CreateTokenPage() {
               <div className="flex justify-between items-center text-slate-300 text-sm">
                 <span className="flex items-center space-x-1.5">
                   <Info className="w-4 h-4 text-sky-400" />
-                  <span>Biaya Launch Protokol Pons</span>
+                  <span>Pons Protocol Launch Fee</span>
                 </span>
                 <span className="font-mono font-bold text-white">
                   {formatUnits(currentLaunchFee, 18)} ETH
@@ -632,7 +645,7 @@ export default function CreateTokenPage() {
                 </div>
               )}
               <div className="flex justify-between items-center text-slate-200 pt-2 border-t border-slate-700 text-sm">
-                <span className="font-bold">Total ETH Diperlukan</span>
+                <span className="font-bold">Total ETH Required</span>
                 <span className="font-mono font-bold text-emerald-400 text-base">
                   {formatUnits(totalRequiredEth, 18)} ETH
                 </span>
@@ -642,7 +655,7 @@ export default function CreateTokenPage() {
             {isInsufficientEth && (
               <div className="p-3 sketch-card border-rose-500/40 text-rose-300 text-xs font-hand font-bold flex items-center space-x-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>Saldo ETH tidak mencukupi untuk biaya launch fee + dev buy.</span>
+                <span>Insufficient ETH balance for launch fee + dev buy.</span>
               </div>
             )}
 
@@ -661,14 +674,14 @@ export default function CreateTokenPage() {
               {isSubmitting || isWaitingTx ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>{isSubmitting ? "Menunggu Persetujuan Wallet..." : "Meluncurkan ke Robinhood Chain..."}</span>
+                  <span>{isSubmitting ? "Waiting for Wallet Approval..." : "Deploying to Robinhood Chain..."}</span>
                 </>
               ) : !isConnected ? (
-                <span>Hubungkan Wallet Terlebih Dahulu</span>
+                <span>Connect Wallet First</span>
               ) : (
                 <>
                   <Rocket className="w-6 h-6" />
-                  <span>Luncurkan Token ({formatUnits(totalRequiredEth, 18)} ETH)</span>
+                  <span>Launch Token ({formatUnits(totalRequiredEth, 18)} ETH)</span>
                 </>
               )}
             </button>
@@ -684,7 +697,7 @@ export default function CreateTokenPage() {
             <div className="flex items-center justify-between border-b-2 border-dashed border-emerald-800/80 pb-3">
               <span className="font-hand text-base font-bold text-emerald-300 uppercase tracking-wider flex items-center space-x-1">
                 <Sparkles className="w-4 h-4 text-emerald-400" />
-                <span>Pratinjau Kartu Token</span>
+                <span>Token Card Preview</span>
               </span>
               <span className="text-xs font-mono sketch-badge px-2 py-0.5 bg-[#0c2e1b] text-emerald-300 border border-emerald-600/40">
                 Live Draft
@@ -702,7 +715,7 @@ export default function CreateTokenPage() {
               </div>
               <div className="min-w-0">
                 <h3 className="text-2xl font-kalam font-bold text-white truncate">
-                  {name.trim() || "Nama Token Anda"}
+                  {name.trim() || "Your Token Name"}
                 </h3>
                 <span className="text-sm px-2.5 py-0.5 sketch-badge bg-emerald-500/20 text-emerald-300 font-mono font-bold uppercase border border-emerald-500/40">
                   ${symbol.trim() || "TICKER"}
@@ -711,26 +724,26 @@ export default function CreateTokenPage() {
             </div>
 
             <p className="text-sm font-hand text-slate-300 line-clamp-3 leading-relaxed">
-              {description.trim() || "Deskripsi token Anda akan muncul di sini saat ditampilkan di Vana Token Explorer..."}
+              {description.trim() || "Your token description will appear here on Vana Token Explorer..."}
             </p>
 
             <div className="p-3 sketch-surface space-y-2 text-xs font-hand">
               <div className="flex justify-between items-center text-slate-300">
-                <span>Total Pasokan Token:</span>
+                <span>Total Token Supply:</span>
                 <span className="font-mono font-bold text-white">1,000,000,000</span>
               </div>
               <div className="flex justify-between items-center text-slate-300">
-                <span>Royalti Kreator:</span>
+                <span>Creator Royalty:</span>
                 <span className="font-mono font-bold text-yellow-300">{creatorFeePercent}%</span>
               </div>
               <div className="flex justify-between items-center text-slate-300">
-                <span>Target Kelulusan Curve:</span>
+                <span>Curve Graduation Target:</span>
                 <span className="font-mono font-bold text-emerald-400">4.2 ETH (Uniswap v4)</span>
               </div>
             </div>
 
             <div className="pt-2 text-center text-xs font-hand text-slate-400">
-              ✏️ Token ini akan langsung tercatat secara eksklusif di Vana Explorer
+              ✏️ This token will be exclusively tracked on Vana Explorer
             </div>
           </div>
         </div>

@@ -398,7 +398,7 @@ export default function DocsPage() {
                     <span className="font-bold text-emerald-400 text-sm block">Buying Tokens (Buy)</span>
                     <p className="text-slate-300 leading-relaxed">
                       1. Enter the amount of native ETH you want to spend.<br />
-                      2. Click <strong>Beli dengan ETH</strong>. Tokens are transferred directly into your wallet and spot price adjusts upward.<br />
+                      2. Click <strong>Buy with ETH</strong>. Tokens are transferred directly into your wallet and spot price adjusts upward.<br />
                       3. No token approvals are required when spending native ETH!
                     </p>
                   </div>
@@ -407,7 +407,7 @@ export default function DocsPage() {
                     <p className="text-slate-300 leading-relaxed">
                       1. Choose the percentage of tokens you wish to sell (25%, 50%, 75%, or 100% Max).<br />
                       2. Click <strong>Approve Token</strong> to authorize the curve contract.<br />
-                      3. Click <strong>Jual Token</strong>. You receive native ETH directly into your wallet balance and spot price adjusts downward.
+                      3. Click <strong>Sell Token</strong>. You receive native ETH directly into your wallet balance and spot price adjusts downward.
                     </p>
                   </div>
                 </div>
@@ -569,7 +569,7 @@ export default function DocsPage() {
 
             <div className="text-sm text-slate-300 leading-relaxed space-y-4">
               <p>
-                Token creators can access the <strong>Royalty Fee Kreator</strong> dashboard (<Link href="/creator-dashboard" className="text-emerald-400 hover:underline">/creator-dashboard</Link>) to monitor token metrics.
+                Token creators can access the <strong>Creator Royalty Fees</strong> dashboard (<Link href="/creator-dashboard" className="text-emerald-400 hover:underline">/creator-dashboard</Link>) to monitor token metrics.
               </p>
 
               <div className="p-5 clay-surface space-y-3 text-xs">
@@ -578,10 +578,10 @@ export default function DocsPage() {
                   <span>How to Claim Your Creator Royalties:</span>
                 </h4>
                 <ol className="list-decimal list-inside space-y-2 text-slate-300">
-                  <li>Open <strong>Royalty Fee Kreator</strong> with the same wallet used to launch the token.</li>
+                  <li>Open <strong>Creator Royalty Fees</strong> with the same wallet used to launch the token.</li>
                   <li>The dashboard automatically reads accumulated ETH balances from the Pons FeeEscrow contract.</li>
                   <li>Inspect <strong>Total Traded Volume</strong> and <strong>Claimable Creator Royalties</strong> (in native ETH).</li>
-                  <li>Click <strong>Klaim Royalti</strong> and confirm the transaction in your wallet. ETH royalties arrive directly in your wallet balance!</li>
+                  <li>Click <strong>Claim Royalties</strong> and confirm the transaction in your wallet. ETH royalties arrive directly in your wallet balance!</li>
                 </ol>
               </div>
             </div>

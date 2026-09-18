@@ -65,32 +65,32 @@ export default function CreatorDashboardPage() {
           <span>Pons Protocol Payouts • Robinhood Chain</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-kalam font-bold text-white tracking-wide flex items-center space-x-2">
-          <span>Royalty Fee Kreator</span>
+          <span>Creator Royalty Fees</span>
           <span className="text-3xl">💰</span>
         </h1>
         <p className="text-base font-hand text-slate-300">
-          Pantau royalti trading dari token yang Anda buat dan klaim akumulasi ETH langsung dari kontrak Pons Fee Escrow.
+          Monitor trading royalties from tokens you have created and claim accumulated ETH directly from the Pons Fee Escrow contract.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="p-6 sketch-card space-y-2 relative">
           <div className="sketch-tape -top-2.5 left-8 w-24 h-4 rotate-1"></div>
-          <span className="text-xs font-hand font-bold text-slate-400 uppercase tracking-wider block">Aset Pembayaran Royalti</span>
+          <span className="text-xs font-hand font-bold text-slate-400 uppercase tracking-wider block">Royalty Payout Asset</span>
           <div className="text-3xl font-bold font-mono text-emerald-300">Native ETH</div>
           <p className="text-xs font-hand text-slate-400 leading-relaxed">
-            Royalti otomatis diakumulasikan dalam mata uang native ETH pada setiap transaksi buy & sell di bonding curve maupun Uniswap v4.
+            Royalties are automatically accrued in native ETH on every buy &amp; sell trade across both the bonding curve and Uniswap v4.
           </p>
         </div>
 
         <div className="p-6 sketch-card space-y-2 relative">
           <div className="sketch-tape -top-2.5 right-8 w-24 h-4 -rotate-1"></div>
-          <span className="text-xs font-hand font-bold text-slate-400 uppercase tracking-wider block">Kontrak Fee Escrow</span>
+          <span className="text-xs font-hand font-bold text-slate-400 uppercase tracking-wider block">Fee Escrow Contract</span>
           <div className="text-xs font-mono text-emerald-400 truncate">
             {CONTRACT_ADDRESSES.feeEscrow}
           </div>
           <p className="text-xs font-hand text-slate-400 leading-relaxed">
-            Dana royalti disimpan dengan aman di kontrak escrow independen dan dapat ditarik kapan saja (pull-based withdrawal).
+            Royalty funds are stored securely in an independent escrow contract and can be withdrawn anytime (pull-based withdrawal).
           </p>
         </div>
       </div>
@@ -103,14 +103,14 @@ export default function CreatorDashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 pb-6 border-b-2 border-dashed border-[#1a6336]">
           <div className="space-y-1">
             <span className="text-xs font-hand font-bold text-slate-400 uppercase tracking-wider block">
-              Saldo Royalti Yang Siap Diklaim
+              Claimable Royalty Balance
             </span>
             <div className="text-4xl sm:text-5xl font-bold font-mono text-white flex items-center space-x-3">
               <Coins className="w-9 h-9 text-emerald-400" />
               <span>{formattedClaimable.toFixed(6)} ETH</span>
             </div>
             <p className="text-xs font-hand text-slate-400">
-              Dapat ditarik ke wallet Anda kapan saja tanpa masa vesting atau batas waktu.
+              Available for withdrawal to your wallet anytime with zero vesting or lockup.
             </p>
           </div>
 
@@ -122,10 +122,10 @@ export default function CreatorDashboardPage() {
             {isClaiming || isWaitingClaim ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Mengklaim ETH...</span>
+                <span>Claiming ETH...</span>
               </>
             ) : (
-              <span>Klaim {formattedClaimable > 0 ? `${formattedClaimable.toFixed(4)} ETH` : "Royalti"}</span>
+              <span>Claim {formattedClaimable > 0 ? `${formattedClaimable.toFixed(4)} ETH` : "Royalties"}</span>
             )}
           </button>
         </div>
@@ -133,10 +133,10 @@ export default function CreatorDashboardPage() {
         <div className="p-4 sketch-surface rounded-sketch space-y-2 text-xs font-hand text-slate-300">
           <div className="font-bold text-white text-sm flex items-center space-x-2">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>Bagaimana Cara Kerja Royalti Kreator?</span>
+            <span>How Do Creator Royalties Work?</span>
           </div>
           <p className="leading-relaxed text-slate-400 text-xs">
-            Setiap ada transaksi trading di token curve Anda, persentase pajak royalti kreator yang Anda tentukan saat launch otomatis tercatat. Dana tersebut masuk ke Fee Escrow Pons dan dapat Anda klaim langsung ke wallet tanpa potongan biaya tambahan.
+            Every time a trade executes on your token&apos;s bonding curve, the creator royalty percentage configured at launch is automatically accrued. Funds accumulate in the Pons Fee Escrow contract and can be claimed directly into your wallet without additional platform fees.
           </p>
         </div>
       </div>
