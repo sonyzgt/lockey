@@ -51,16 +51,30 @@ export default function CreateTokenPage() {
         body: formData,
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to upload image to Pinata IPFS");
+      let data: any;
+      try {
+        data = await res.json();
+      } catch {
+        if (res.status === 413) {
+          throw new Error("Image exceeds web server size limit (HTTP 413). Please upload an image under 1MB or update Nginx client_max_body_size.");
+        }
+        throw new Error(`Upload failed with server status ${res.status}`);
       }
 
-      setImageUrl(data.ipfsUri || data.gatewayUrl);
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to upload image");
+      }
+
+      const resolvedUrl = data.ipfsUri?.startsWith("ipfs://")
+        ? data.ipfsUri
+        : (typeof window !== "undefined" && (data.url?.startsWith("/") || data.gatewayUrl?.startsWith("/"))
+          ? `${window.location.origin}${data.url || data.gatewayUrl}`
+          : (data.url || data.gatewayUrl || data.ipfsUri));
+
+      setImageUrl(resolvedUrl);
     } catch (err: unknown) {
-      console.error("Pinata upload error:", err);
-      const msg = err instanceof Error ? err.message : "Failed to upload to Pinata IPFS";
+      console.error("Image upload error:", err);
+      const msg = err instanceof Error ? err.message : "Failed to upload image";
       setUploadError(msg);
     } finally {
       setIsUploadingImage(false);
@@ -439,12 +453,12 @@ export default function CreateTokenPage() {
             <div>
               <div className="flex items-center justify-between mb-1">
                 <label className="block text-base font-hand font-bold text-slate-200">
-                  Token Logo / Image (IPFS)
+                  Token Logo / Image
                 </label>
                 {imageUrl && (
                   <span className="text-xs font-hand text-emerald-400 font-bold flex items-center space-x-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>IPFS Ready</span>
+                    <span>Image Ready</span>
                   </span>
                 )}
               </div>
@@ -472,7 +486,7 @@ export default function CreateTokenPage() {
                     {isUploadingImage ? (
                       <p className="text-xs font-hand text-sky-300 flex items-center space-x-1">
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                        <span>Uploading to IPFS Pinata...</span>
+                        <span>Uploading image...</span>
                       </p>
                     ) : imageUrl ? (
                       <p className="text-[11px] font-mono text-emerald-400 truncate">
@@ -518,7 +532,7 @@ export default function CreateTokenPage() {
                         Drag &amp; drop logo image here, or <span className="text-sky-400 underline">browse files</span>
                       </p>
                       <p className="text-xs font-hand text-slate-400">
-                        PNG, JPG, WebP, GIF up to 5MB (automatically pinned to IPFS)
+                        PNG, JPG, WebP, GIF up to 5MB
                       </p>
                     </div>
                   </div>
