@@ -20,7 +20,7 @@ export function useEthPrice() {
             return;
           }
         }
-      } catch (err) {
+      } catch {
         try {
           const cgRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
           if (cgRes.ok) {

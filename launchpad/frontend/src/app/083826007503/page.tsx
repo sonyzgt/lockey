@@ -322,10 +322,10 @@ function ProtocolFeeSummaryCard({
 // ─── Calculate Total Fees across all tokens ──────────────────────────────────
 function TotalProtocolFeeAmount({ tokens }: { tokens?: `0x${string}`[] }) {
   if (!tokens || tokens.length === 0) return <>0.0000</>;
-  return <TotalProtocolFeeCalculator tokens={tokens} />;
+  return <TotalProtocolFeeCalculator />;
 }
 
-function TotalProtocolFeeCalculator({ tokens }: { tokens: `0x${string}`[] }) {
+function TotalProtocolFeeCalculator() {
   // Read protocol fees from FeeEscrow contract
   const { data: ethBalance } = useReadContract({
     address: CONTRACT_ADDRESSES.feeEscrow,

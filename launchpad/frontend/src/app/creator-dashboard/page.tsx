@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { formatUnits } from "viem";
-import { Coins, Sparkles, Loader2, ShieldCheck, Award } from "lucide-react";
+import { Coins, Sparkles, Loader2, ShieldCheck } from "lucide-react";
 import { CONTRACT_ADDRESSES } from "@/config/chain";
 import { PONS_FEE_ESCROW_ABI } from "@/config/abis";
 import { useToast } from "@/components/Toast";

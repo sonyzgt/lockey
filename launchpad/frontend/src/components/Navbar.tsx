@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
-import { Wallet, AlertTriangle, Sparkles } from "lucide-react";
+import { Wallet, AlertTriangle } from "lucide-react";
 import { robinhoodChain } from "../config/chain";
 
 export function Navbar() {

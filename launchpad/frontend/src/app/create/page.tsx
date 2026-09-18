@@ -22,7 +22,6 @@ export default function CreateTokenPage() {
   const [twitter, setTwitter] = useState("");
   const [telegram, setTelegram] = useState("");
   const [discord, setDiscord] = useState("");
-  const [farcaster, setFarcaster] = useState("");
   
   // Custom Creator Royalty Rate Selection (0% to 10%)
   const [creatorFeePercent, setCreatorFeePercent] = useState<number>(1); // Default 1%
@@ -272,7 +271,7 @@ export default function CreateTokenPage() {
           telegram: telegram.trim(),
           discord: discord.trim(),
           website: website.trim(),
-          farcaster: farcaster.trim(),
+          farcaster: "",
         },
         creatorFeeRecipient: address,
         creatorTaxBps: Math.min(Math.max(Math.round(creatorFeePercent * 100), 0), 1000),
@@ -284,34 +283,23 @@ export default function CreateTokenPage() {
       if (parsedDevBuy > 0n) {
         writeContract({
           address: CONTRACT_ADDRESSES.launchAndBuy,
-          abi: PONS_ROUTER_ABI,
+          abi: PONS_LAUNCH_AND_BUY_ROUTER_ABI,
           functionName: "launchAndBuy",
-          args: [
-            tokenParams,
-            0n, // launchConfigId 0 (Standard fixed supply)
-            "0x0000000000000000000000000000000000000000", // native ETH pairToken
-            parsedDevBuy,
-            0n, // minTokensOut
-            address, // recipient
-            [], // extra snipe exemptions
-          ],
-          value: totalRequiredEth,
+          args: [tokenParams, parsedDevBuy, 0n, address],
+          value: parsedDevBuy,
         });
       } else {
         writeContract({
           address: CONTRACT_ADDRESSES.factory,
           abi: PONS_FACTORY_ABI,
           functionName: "launchToken",
-          args: [
-            tokenParams,
-            0n,
-            "0x0000000000000000000000000000000000000000",
-          ],
-          value: currentLaunchFee,
+          args: [tokenParams],
         });
       }
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Failed to initiate transaction with wallet.";
+      const msg = err instanceof Error ? err.message : "Failed to initiate token deployment.";
+      console.error(err);
+      toast.error("Deployment Error", msg.split("\n")[0]);
       setErrorMessage(msg);
     }
   };
@@ -322,7 +310,7 @@ export default function CreateTokenPage() {
       <div className="space-y-2">
         <div className="inline-flex items-center space-x-2 px-3 py-1 sketch-badge bg-[#0c2e1b] text-emerald-300 text-xs font-hand font-bold tracking-wide border border-emerald-500/40">
           <Sparkles className="w-4 h-4 text-emerald-400" />
-          <span>Creator's Blueprint • Pons v2 on Robinhood Chain</span>
+          <span>Creator&apos;s Blueprint • Pons v2 on Robinhood Chain</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-kalam font-bold text-white tracking-wide flex items-center space-x-2">
           <span>Luncurkan Token Meme</span>
