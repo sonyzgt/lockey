@@ -1,0 +1,29 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+script = "script"
+solc_version = "0.8.24"
+optimizer = true
+optimizer_runs = 200
+evm_version = "paris"
+via_ir = true
+fuzz = { runs = 1000 }
+invariant = { runs = 256 }
+
+[profile.ci]
+fuzz = { runs = 5000 }
+invariant = { runs = 512 }
+
+[rpc_endpoints]
+arc_mainnet = "${ARC_RPC_URL}"
+arc_testnet = "${ARC_TESTNET_RPC_URL}"
+
+[etherscan]
+arc_mainnet = { key = "${ETHERSCAN_API_KEY}", url = "${ARC_EXPLORER_API_URL}" }
+
+[fmt]
+line_length = 120
+tab_width = 4
+bracket_spacing = true
