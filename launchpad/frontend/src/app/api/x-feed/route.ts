@@ -207,7 +207,7 @@ async function fetchFromTwitterApiIo(accounts: string[], apiKey: string): Promis
             id: author.id || author.id_str || "0",
             name: author.name || username,
             username: username,
-            profileImageUrl: author.profilePicture || author.profile_image_url_https || "/lockey-logo.svg",
+            profileImageUrl: author.profilePicture || author.profile_image_url_https || "/logo.png",
             verified: Boolean(author.isBlueVerified || author.isVerified || author.verified),
           },
           media: mediaList,

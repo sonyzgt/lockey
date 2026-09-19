@@ -34,7 +34,7 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
       setSymbol(tweet.suggestedToken?.symbol || "LOCK");
       
       const mediaImage = tweet.media?.[0]?.url;
-      setLogoUrl(mediaImage || tweet.author.profileImageUrl || "/lockey-logo.svg");
+      setLogoUrl(mediaImage || tweet.author.profileImageUrl || "/logo.png");
 
       const tweetSource = tweet.tweetUrl ? `\n\nInspired by @${tweet.author.username}: ${tweet.tweetUrl}` : "";
       setDescription(`"${tweet.text}"${tweetSource}`);
@@ -289,11 +289,11 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
               <div className="w-11 h-11 rounded-lg border border-yellow-500/40 bg-zinc-900 overflow-hidden shrink-0 flex items-center justify-center p-0.5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={logoUrl || "/lockey-logo.svg"}
+                  src={logoUrl || "/logo.png"}
                   alt="Preview"
                   className="w-full h-full object-cover rounded-md"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/lockey-logo.svg";
+                    (e.target as HTMLImageElement).src = "/logo.png";
                   }}
                 />
               </div>

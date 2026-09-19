@@ -38,7 +38,7 @@ export function Navbar() {
             <div className="relative w-10 h-10 rounded-xl border border-yellow-500/40 bg-zinc-900 flex items-center justify-center p-1.5 shadow-sm transition-colors group-hover:border-yellow-400">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/lockey-logo.svg"
+                src="/logo.png"
                 alt="LOCKEY Logo"
                 className="w-full h-full object-contain"
               />

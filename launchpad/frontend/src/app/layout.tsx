@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   title: "LOCKEY | Live Narrative Radar & Fast Launch",
   description: "Monitor crypto narratives and launch tokens instantly on Robinhood Chain.",
   icons: {
-    icon: "/lockey-logo.svg",
-    shortcut: "/lockey-logo.svg",
-    apple: "/lockey-logo.svg",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
 };
 

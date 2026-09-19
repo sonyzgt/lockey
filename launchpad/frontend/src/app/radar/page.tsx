@@ -269,7 +269,7 @@ export default function RadarPage() {
                     alt={tweet.author.name}
                     className="w-10 h-10 rounded-full border border-yellow-500/40 object-cover shrink-0 mt-0.5"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/lockey-logo.svg";
+                      (e.target as HTMLImageElement).src = "/logo.png";
                     }}
                   />
                   <div className="flex-1 min-w-0">

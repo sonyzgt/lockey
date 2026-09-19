@@ -52,7 +52,7 @@ function normalizeRawTweet(raw: any): ParsedTweet | null {
   const user = raw.user || raw.author || {};
   const username = (user.screen_name || user.username || raw.username || "crypto_insider").replace("@", "");
   const name = user.name || raw.author_name || username;
-  const avatar = user.profile_image_url_https || user.profile_image_url || "/lockey-logo.svg";
+  const avatar = user.profile_image_url_https || user.profile_image_url || "/logo.png";
   const verified = Boolean(user.verified || user.is_blue_verified);
 
   // Media extraction
