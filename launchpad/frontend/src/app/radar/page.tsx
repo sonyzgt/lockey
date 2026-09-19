@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Radar,
   ExternalLink,
@@ -11,18 +11,22 @@ import {
   AlertCircle,
   CheckCircle2,
   RefreshCw,
+  Sparkles,
 } from "lucide-react";
 import { ParsedTweet } from "../api/x-feed/route";
 import { FastLaunchModal } from "@/components/FastLaunchModal";
 
 export default function RadarPage() {
   const [tweets, setTweets] = useState<ParsedTweet[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isScanning, setIsScanning] = useState(false);
+  const [lastScannedTime, setLastScannedTime] = useState<string>("just now");
+  const [newTweetIds, setNewTweetIds] = useState<Set<string>>(new Set());
   const [selectedTweetForLaunch, setSelectedTweetForLaunch] = useState<ParsedTweet | null>(null);
 
   const fetchFeed = useCallback(async () => {
     try {
-      setIsLoading(true);
+      setIsScanning(true);
       const res = await fetch("/api/x-feed", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -31,12 +35,50 @@ export default function RadarPage() {
 
       const data = await res.json();
       if (data && Array.isArray(data.tweets)) {
-        setTweets(data.tweets);
+        const incoming: ParsedTweet[] = data.tweets;
+
+        setTweets((prev) => {
+          if (prev.length === 0) {
+            return incoming;
+          }
+
+          const existingIds = new Set(prev.map((t) => t.id));
+          const newlyArrivedIds: string[] = [];
+
+          incoming.forEach((t) => {
+            if (!existingIds.has(t.id)) {
+              newlyArrivedIds.push(t.id);
+            }
+          });
+
+          // Mark newly detected tweets
+          if (newlyArrivedIds.length > 0) {
+            setNewTweetIds((old) => {
+              const updated = new Set(old);
+              newlyArrivedIds.forEach((id) => updated.add(id));
+              return updated;
+            });
+          }
+
+          // Merge and deduplicate by ID
+          const existingMap = new Map(prev.map((t) => [t.id, t]));
+          incoming.forEach((t) => existingMap.set(t.id, t));
+
+          // Sort descending by createdAt (newest first)
+          const merged = Array.from(existingMap.values()).sort(
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+
+          return merged.slice(0, 80);
+        });
+
+        setLastScannedTime(new Date().toLocaleTimeString());
       }
     } catch (err) {
       console.error("Failed to load X feed:", err);
     } finally {
-      setIsLoading(false);
+      setIsInitialLoading(false);
+      setIsScanning(false);
     }
   }, []);
 
@@ -45,11 +87,11 @@ export default function RadarPage() {
     fetchFeed();
   }, [fetchFeed]);
 
-  // Quiet background auto-refresh every 30s
+  // Real-time automatic background polling every 12 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       fetchFeed();
-    }, 30000);
+    }, 12000);
 
     return () => clearInterval(timer);
   }, [fetchFeed]);
@@ -57,6 +99,7 @@ export default function RadarPage() {
   const formatTimeAgo = (dateString: string) => {
     try {
       const diff = Math.floor((Date.now() - new Date(dateString).getTime()) / 1000);
+      if (diff < 30) return "just now";
       if (diff < 60) return `${diff}s ago`;
       if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
       if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
@@ -72,52 +115,73 @@ export default function RadarPage() {
       <div className="sketch-card p-6 sm:p-8 bg-[#092214] border-2 border-emerald-500 relative">
         <div className="hidden sm:block absolute -top-3 left-12 w-32 h-6 bg-emerald-400/35 border border-dashed border-emerald-400 -rotate-2 pointer-events-none"></div>
 
-        <div className="flex items-start sm:items-center space-x-4">
-          <div className="w-14 h-14 rounded-sketch border-2 border-emerald-400 bg-[#0c2e1b] shadow-sketch p-1 shrink-0 flex items-center justify-center text-emerald-300">
-            <Radar className="w-8 h-8 animate-pulse text-emerald-400" />
-          </div>
-          <div>
-            <div className="flex items-center space-x-3">
-              <h1 className="text-3xl sm:text-4xl font-kalam font-bold text-white tracking-wide flex items-center space-x-2">
-                <span>X Narrative Radar</span>
-                <span className="text-xl">⚡</span>
-              </h1>
-              <span className="flex items-center space-x-1.5 px-3 py-0.5 sketch-badge bg-[#0c2e1b] text-emerald-300 font-hand font-bold text-xs border border-emerald-500/50">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                <span>Live Stream</span>
-              </span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start sm:items-center space-x-4">
+            <div className="w-14 h-14 rounded-sketch border-2 border-emerald-400 bg-[#0c2e1b] shadow-sketch p-1 shrink-0 flex items-center justify-center text-emerald-300">
+              <Radar className={`w-8 h-8 text-emerald-400 ${isScanning ? "animate-spin" : "animate-pulse"}`} />
             </div>
-            <p className="text-sm font-hand text-emerald-200/90 mt-1">
-              Live breaking posts from X • Launch meme tokens instantly on Pons bonding curves
-            </p>
+            <div>
+              <div className="flex items-center space-x-3">
+                <h1 className="text-3xl sm:text-4xl font-kalam font-bold text-white tracking-wide flex items-center space-x-2">
+                  <span>X Narrative Radar</span>
+                  <span className="text-xl">⚡</span>
+                </h1>
+                <span className="flex items-center space-x-1.5 px-3 py-0.5 sketch-badge bg-[#0c2e1b] text-emerald-300 font-hand font-bold text-xs border border-emerald-500/50">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span>Auto-Refresh Active (12s)</span>
+                </span>
+              </div>
+              <p className="text-sm font-hand text-emerald-200/90 mt-1">
+                Live breaking posts from 1,000+ monitored accounts • Launch meme tokens instantly on Pons bonding curves
+              </p>
+            </div>
+          </div>
+
+          {/* Live Scanner Activity Indicator */}
+          <div className="flex items-center space-x-3 self-end sm:self-center">
+            <div className="px-3.5 py-1.5 sketch-surface text-xs font-mono text-emerald-300 flex items-center space-x-2 border border-emerald-700/50">
+              <span className={`w-2 h-2 rounded-full ${isScanning ? "bg-amber-400 animate-ping" : "bg-emerald-400 animate-pulse"}`}></span>
+              <span>{isScanning ? "Scanning X..." : `Last scan: ${lastScannedTime}`}</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Tweets Grid / Feed */}
-      {isLoading && tweets.length === 0 ? (
+      {isInitialLoading && tweets.length === 0 ? (
         <div className="sketch-card p-16 text-center space-y-4 bg-[#092214]">
           <RefreshCw className="w-8 h-8 text-emerald-400 animate-spin mx-auto" />
           <p className="font-hand text-lg text-emerald-200">
-            Scanning X stream for new narratives...
+            Scanning 1,000+ accounts for newest narratives...
           </p>
         </div>
       ) : tweets.length === 0 ? (
         <div className="sketch-card p-12 text-center space-y-3 bg-[#092214]">
           <AlertCircle className="w-8 h-8 text-emerald-400 mx-auto opacity-70" />
-          <p className="font-hand text-lg text-emerald-100">No tweets found in stream.</p>
+          <p className="font-hand text-lg text-emerald-100">No tweets found in current stream.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {tweets.map((tweet) => {
             const hasMedia = tweet.media && tweet.media.length > 0;
             const primaryMedia = hasMedia ? tweet.media![0].url : null;
+            const isNew = newTweetIds.has(tweet.id);
 
             return (
               <div
                 key={tweet.id}
-                className="sketch-card p-5 bg-[#081e12] flex flex-col justify-between space-y-4 hover:border-emerald-400 transition-all group"
+                className={`sketch-card p-5 bg-[#081e12] flex flex-col justify-between space-y-4 hover:border-emerald-400 transition-all group relative ${
+                  isNew ? "border-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.3)] animate-fade-in" : ""
+                }`}
               >
+                {/* New post highlight badge */}
+                {isNew && (
+                  <div className="absolute -top-3 right-6 px-2.5 py-0.5 rounded-full bg-emerald-400 text-slate-950 font-hand font-bold text-xs shadow-sm flex items-center space-x-1 animate-bounce">
+                    <Sparkles className="w-3 h-3 text-slate-950" />
+                    <span>NEW POST</span>
+                  </div>
+                )}
+
                 <div className="space-y-3">
                   {/* Tweet Header */}
                   <div className="flex items-start justify-between">

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export interface ParsedTweet {
   id: string;
   text: string;
@@ -271,7 +274,7 @@ export async function POST(req: NextRequest) {
       headers: {
         Authorization: `Bearer ${bearerToken}`,
       },
-      next: { revalidate: 10 },
+      cache: "no-store",
     });
 
     if (!xRes.ok) {
