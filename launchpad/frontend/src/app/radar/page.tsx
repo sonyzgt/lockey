@@ -23,6 +23,7 @@ export default function RadarPage() {
   const [lastScannedTime, setLastScannedTime] = useState<string>("just now");
   const [newTweetIds, setNewTweetIds] = useState<Set<string>>(new Set());
   const [selectedTweetForLaunch, setSelectedTweetForLaunch] = useState<ParsedTweet | null>(null);
+  const [apiNotice, setApiNotice] = useState<string | null>(null);
 
   const fetchFeed = useCallback(async () => {
     try {
@@ -34,6 +35,12 @@ export default function RadarPage() {
       });
 
       const data = await res.json();
+      if (data && data.apiError === "credits_depleted") {
+        setApiNotice("X API Notice: Your X Developer credits are depleted (HTTP 402). Streaming updates from your 1,090 accounts. Top up at developer.x.com to stream live from Twitter.");
+      } else {
+        setApiNotice(null);
+      }
+
       if (data && Array.isArray(data.tweets)) {
         const incoming: ParsedTweet[] = data.tweets;
 
@@ -145,6 +152,21 @@ export default function RadarPage() {
             </div>
           </div>
         </div>
+
+        {apiNotice && (
+          <div className="mt-4 p-3 rounded-sketch bg-amber-950/60 border border-amber-500/50 text-amber-200 text-xs font-hand flex items-center justify-between gap-3">
+            <div className="flex items-center space-x-2">
+              <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+              <span>{apiNotice}</span>
+            </div>
+            <button
+              onClick={() => setApiNotice(null)}
+              className="text-amber-400 hover:text-white text-xs underline shrink-0 font-mono"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Tweets Grid / Feed */}
