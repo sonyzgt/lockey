@@ -50,16 +50,16 @@ export function Navbar() {
 
         <div className="flex items-center space-x-3">
           <a
-            href="https://x.com"
+            href="https://x.com/lockeyhub"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-yellow-500/40 rounded-lg text-xs font-medium text-zinc-300 hover:text-yellow-400 transition-colors"
-            title="Follow @lockey on X"
+            title="Follow @lockeyhub on X"
           >
             <svg className="w-3.5 h-3.5 fill-current text-yellow-400" viewBox="0 0 24 24">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
-            <span className="font-semibold">@lockey</span>
+            <span className="font-semibold">@lockeyhub</span>
           </a>
 
           <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 rounded-lg">

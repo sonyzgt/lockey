@@ -70,7 +70,7 @@ export default function RootLayout({
 
                 {/* Official Twitter / X Link */}
                 <a
-                  href="https://x.com"
+                  href="https://x.com/lockeyhub"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="sketch-btn-secondary px-3.5 py-1.5 flex items-center space-x-2 text-yellow-400 hover:text-white font-medium text-xs rounded-lg transition-all"
@@ -82,7 +82,7 @@ export default function RootLayout({
                   >
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                   </svg>
-                  <span className="font-semibold">@lockey</span>
+                  <span className="font-semibold">@lockeyhub</span>
                 </a>
               </div>
             </div>
