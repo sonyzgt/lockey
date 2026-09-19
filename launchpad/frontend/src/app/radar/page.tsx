@@ -188,14 +188,7 @@ export default function RadarPage() {
     }
   };
 
-  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const handleCopyTweet = (tweet: ParsedTweet) => {
-    navigator.clipboard.writeText(`${tweet.tweetUrl}\n\n${tweet.text}`);
-    setCopiedId(tweet.id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
 
   const filteredTweets = tweets.filter((t) => {
     if (!searchQuery.trim()) return true;
@@ -360,29 +353,16 @@ export default function RadarPage() {
                       </div>
                     </div>
 
-                    {/* Action buttons (Copy link / Open on X) */}
-                    <div className="flex items-center space-x-1 shrink-0">
-                      <button
-                        onClick={() => handleCopyTweet(tweet)}
-                        className="p-1.5 rounded-md hover:bg-emerald-950/80 text-slate-400 hover:text-emerald-300 transition-colors"
-                        title="Copy tweet link"
-                      >
-                        {copiedId === tweet.id ? (
-                          <span className="text-[10px] text-emerald-400 font-mono">Copied!</span>
-                        ) : (
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        )}
-                      </button>
-                      <a
-                        href={tweet.tweetUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1.5 rounded-md hover:bg-emerald-950/80 text-slate-400 hover:text-emerald-300 transition-colors"
-                        title="Open on X.com"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
-                    </div>
+                    {/* Action button (Open on X) */}
+                    <a
+                      href={tweet.tweetUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 rounded-md hover:bg-emerald-950/80 text-slate-400 hover:text-emerald-300 transition-colors shrink-0"
+                      title="Open on X.com"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
                   </div>
 
                   {/* Tweet Body Content */}
