@@ -28,8 +28,19 @@ if (!match) {
 const accounts = JSON.parse(match[1]);
 console.log(`Ditemukan ${accounts.length} akun yang akan didaftarkan ke TwitterAPI.io`);
 
-const apiKey = process.argv[2] || process.env.TWITTERAPI_IO_KEY || '';
-const webhookUrl = process.argv[3] || process.env.TWITTERAPI_WEBHOOK_URL || 'https://vanafamily.com/api/webhook/twitterapi';
+let apiKey = process.argv[2] || process.env.TWITTERAPI_IO_KEY || '';
+let webhookUrl = process.argv[3] || process.env.TWITTERAPI_WEBHOOK_URL || 'https://vanafamily.com/api/webhook/twitterapi';
+
+if (!apiKey) {
+  try {
+    const envPath = path.join(__dirname, '../.env.local');
+    if (fs.existsSync(envPath)) {
+      const envContent = fs.readFileSync(envPath, 'utf-8');
+      const m = envContent.match(/TWITTERAPI_IO_KEY=["']?([^"'\r\n]+)["']?/);
+      if (m) apiKey = m[1];
+    }
+  } catch (e) {}
+}
 
 if (!apiKey) {
   console.log('\n=============================================================');
@@ -42,12 +53,13 @@ if (!apiKey) {
 }
 
 console.log(`Target Webhook: ${webhookUrl}`);
+console.log(`Menggunakan API Key: ${apiKey.slice(0, 8)}...`);
 console.log(`Memulai pendaftaran ${accounts.length} akun... Harap tunggu.\n`);
 
 async function registerAccount(username) {
   try {
     // Format request sesuai spesifikasi TwitterAPI.io monitor endpoint
-    const res = await fetch('https://api.twitterapi.io/twitter/monitor/add', {
+    const res = await fetch('https://api.twitterapi.io/oapi/x_user_stream/add_user_to_monitor_tweet', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +72,7 @@ async function registerAccount(username) {
     });
 
     const data = await res.json().catch(() => ({}));
-    return { username, ok: res.ok, status: res.status, data };
+    return { username, ok: res.ok && data.status === 'success', status: data.msg || res.status, data };
   } catch (err) {
     return { username, ok: false, error: err.message };
   }

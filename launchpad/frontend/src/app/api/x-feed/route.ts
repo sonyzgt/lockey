@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { TRACKED_ACCOUNTS } from "@/config/trackedAccounts";
-import { getStoredTweets } from "@/lib/tweetDb";
+import { getStoredTweets, saveBatchStoredTweets } from "@/lib/tweetDb";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -160,6 +160,69 @@ function mergeWithStoredTweets(incoming: ParsedTweet[]): ParsedTweet[] {
   ).slice(0, 80);
 }
 
+async function fetchFromTwitterApiIo(accounts: string[], apiKey: string): Promise<ParsedTweet[]> {
+  const promises = accounts.map(async (handle) => {
+    try {
+      const cleanHandle = handle.replace("@", "").trim();
+      const res = await fetch(`https://api.twitterapi.io/twitter/user/last_tweets?userName=${encodeURIComponent(cleanHandle)}`, {
+        headers: { "X-API-Key": apiKey },
+        cache: "no-store",
+      });
+      if (!res.ok) return [];
+      const json = await res.json();
+      if (json.status !== "success" || !json.data?.tweets) return [];
+
+      const rawTweets = json.data.tweets.slice(0, 3);
+      return rawTweets.map((t: any): ParsedTweet => {
+        const author = t.author || {};
+        const mediaList: { url: string; type: string }[] = [];
+
+        if (t.extendedEntities?.media && Array.isArray(t.extendedEntities.media)) {
+          t.extendedEntities.media.forEach((m: any) => {
+            if (m.media_url_https) {
+              mediaList.push({
+                url: m.media_url_https,
+                type: m.type || "photo",
+              });
+            }
+          });
+        }
+
+        const tweetId = t.id || t.id_str || String(Date.now());
+        const username = author.userName || author.screen_name || cleanHandle;
+        const text = t.text || "";
+
+        return {
+          id: tweetId,
+          text: text,
+          createdAt: t.createdAt ? new Date(t.createdAt).toISOString() : new Date().toISOString(),
+          tweetUrl: t.url || `https://x.com/${username}/status/${tweetId}`,
+          author: {
+            id: author.id || author.id_str || "0",
+            name: author.name || username,
+            username: username,
+            profileImageUrl: author.profilePicture || author.profile_image_url_https || "/vana-logo.png",
+            verified: Boolean(author.isBlueVerified || author.isVerified || author.verified),
+          },
+          media: mediaList,
+          metrics: {
+            likes: t.likeCount ?? t.likes ?? 0,
+            retweets: t.retweetCount ?? t.retweets ?? 0,
+            replies: t.replyCount ?? t.replies ?? 0,
+          },
+          suggestedToken: extractSuggestedToken(text),
+        };
+      });
+    } catch (err) {
+      console.error(`Error fetching tweets for @${handle}:`, err);
+      return [];
+    }
+  });
+
+  const results = await Promise.all(promises);
+  return results.flat();
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
@@ -181,6 +244,31 @@ export async function POST(req: NextRequest) {
     const customQuery = (body.query as string | undefined)?.trim();
     const clientBearer = (body.bearerToken as string | undefined)?.trim();
 
+    // 1. Prioritize TwitterAPI.io API Key
+    const twitterApiIoKey = process.env.TWITTERAPI_IO_KEY || body.twitterApiKey;
+    if (twitterApiIoKey) {
+      const BATCH_SIZE = 5;
+      const totalBatches = Math.ceil(uniqueAccounts.length / BATCH_SIZE);
+      const rotationIndex = Math.floor(Date.now() / (12 * 1000)) % totalBatches;
+      const start = rotationIndex * BATCH_SIZE;
+      const targetBatch = uniqueAccounts.slice(start, start + BATCH_SIZE);
+
+      const realTweets = await fetchFromTwitterApiIo(
+        targetBatch.length > 0 ? targetBatch : uniqueAccounts.slice(0, BATCH_SIZE),
+        twitterApiIoKey
+      );
+
+      if (realTweets.length > 0) {
+        saveBatchStoredTweets(realTweets);
+        return NextResponse.json({
+          success: true,
+          isMock: false,
+          source: "twitterapi.io",
+          tweets: mergeWithStoredTweets(realTweets),
+        });
+      }
+    }
+
     const bearerToken =
       clientBearer ||
       process.env.X_BEARER_TOKEN ||
@@ -191,8 +279,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({
         success: true,
         isMock: true,
-        message: "No X Bearer Token provided. Displaying stream from 1,000+ tracked accounts.",
-        tweets: generateDynamicFeed(uniqueAccounts),
+        message: "Displaying stream from 1,000+ tracked accounts.",
+        tweets: mergeWithStoredTweets(generateDynamicFeed(uniqueAccounts)),
       });
     }
 
