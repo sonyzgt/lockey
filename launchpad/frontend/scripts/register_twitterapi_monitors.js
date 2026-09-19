@@ -9,7 +9,7 @@
  * node scripts/register_twitterapi_monitors.js [API_KEY_TWITTERAPI_IO] [WEBHOOK_URL]
  *
  * Contoh:
- * node scripts/register_twitterapi_monitors.js abc123key https://vanafamily.com/api/webhook/twitterapi
+ * node scripts/register_twitterapi_monitors.js abc123key https://lockey.site/api/webhook/twitterapi
  */
 
 const fs = require('fs');
@@ -29,7 +29,7 @@ const accounts = JSON.parse(match[1]);
 console.log(`Ditemukan ${accounts.length} akun yang akan didaftarkan ke TwitterAPI.io`);
 
 let apiKey = process.argv[2] || process.env.TWITTERAPI_IO_KEY || '';
-let webhookUrl = process.argv[3] || process.env.TWITTERAPI_WEBHOOK_URL || 'https://vanafamily.com/api/webhook/twitterapi';
+let webhookUrl = process.argv[3] || process.env.TWITTERAPI_WEBHOOK_URL || 'https://lockey.site/api/webhook/twitterapi';
 
 if (!apiKey) {
   try {

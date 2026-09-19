@@ -19,6 +19,7 @@ const kalam = Kalam({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://lockey.site"),
   title: "LOCKEY | Live Narrative Radar & Fast Launch",
   description: "Monitor crypto narratives and launch tokens instantly on Robinhood Chain.",
   icons: {
