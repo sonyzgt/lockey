@@ -35,23 +35,16 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center space-x-8">
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="relative w-10 h-10 rounded-xl border border-yellow-500/40 bg-zinc-900 flex items-center justify-center p-1.5 shadow-sm transition-colors group-hover:border-yellow-400">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo.png"
-                alt="LOCKEY Logo"
-                className="w-full h-full object-contain"
-              />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.png"
+              alt="LOCKEY Logo"
+              className="w-11 h-11 object-contain rounded-lg transition-transform group-hover:scale-105"
+            />
             <div>
-              <div className="flex items-center space-x-2">
-                <span className="text-xl font-extrabold text-white tracking-tight group-hover:text-yellow-400 transition">
-                  LOCKEY
-                </span>
-                <span className="text-[10px] px-1.5 py-0.2 bg-yellow-400/10 text-yellow-400 font-mono font-bold rounded border border-yellow-400/30 uppercase">
-                  Radar
-                </span>
-              </div>
+              <span className="text-xl font-extrabold text-white tracking-tight group-hover:text-yellow-400 transition">
+                LOCKEY
+              </span>
               <span className="block text-[10px] text-yellow-500 font-mono tracking-wider uppercase">
                 Robinhood Chain • 4663
               </span>
