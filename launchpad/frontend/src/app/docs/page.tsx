@@ -90,18 +90,19 @@ export default function DocsPage() {
 
   const navGroups = [
     {
-      label: "Protocol & Mechanics",
+      label: "Narrative & Protocol Mechanics",
       items: [
-        { id: "overview", label: "Protocol Overview" },
-        { id: "how-it-works", label: "How It Works (Step-by-Step)" },
-        { id: "launches", label: "1. Token Launch Mechanism" },
-        { id: "trading", label: "2. Trading & Bonding Curve" },
-        { id: "anti-snipe", label: "3. Anti-Snipe (99% Bot Decay)" },
-        { id: "graduation", label: "4. Uniswap v4 Graduation" },
-        { id: "fees", label: "5. Fees & Creator Royalties" },
-        { id: "creator-guide", label: "6. Creator Dashboard" },
-        { id: "cto", label: "7. Community Takeovers (CTO)" },
-        { id: "risks", label: "8. Risk Disclosures" },
+        { id: "radar-narrative", label: "0. Live X Narrative Radar & Fast Launch" },
+        { id: "overview", label: "1. Protocol Overview" },
+        { id: "how-it-works", label: "2. How It Works (Step-by-Step)" },
+        { id: "launches", label: "3. Token Launch Mechanism" },
+        { id: "trading", label: "4. Trading & Bonding Curve" },
+        { id: "anti-snipe", label: "5. Anti-Snipe (99% Bot Decay)" },
+        { id: "graduation", label: "6. Uniswap v4 Graduation" },
+        { id: "fees", label: "7. Fees & Creator Royalties" },
+        { id: "creator-guide", label: "8. Creator Dashboard" },
+        { id: "cto", label: "9. Community Takeovers (CTO)" },
+        { id: "risks", label: "10. Risk Disclosures" },
       ],
     },
     {
@@ -203,10 +204,77 @@ export default function DocsPage() {
               PART 1: PROTOCOL & HOW IT WORKS (COMPLETE GUIDE)
              ========================================================================= */}
 
+          {/* 0. LIVE X NARRATIVE RADAR */}
+          <section id="radar-narrative" className="scroll-mt-24 space-y-6">
+            <div className="border-b border-zinc-800 pb-3">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-mono font-bold mb-2">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Flagship Live Feed Engine</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-white">
+                Live X Narrative Radar &amp; Instant Fast Launch
+              </h2>
+              <p className="text-xs text-zinc-400">
+                Real-time Twitter/X alpha detection, automatic narrative token extraction, and sub-second Robinhood Chain deployment
+              </p>
+            </div>
+
+            <div className="text-sm text-zinc-300 leading-relaxed space-y-4">
+              <p>
+                The <strong>LOCKEY Live Narrative Radar</strong> continuously tracks influential crypto accounts and trending viral discussions directly from Twitter/X. Instead of waiting hours for copycat tokens to be manually created, LOCKEY parses emerging crypto narratives the second they break and offers an instant <strong>Fast Launch</strong> flow.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 bg-zinc-900/90 border border-zinc-800 rounded-xl space-y-2">
+                  <div className="w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 font-bold text-xs">
+                    01
+                  </div>
+                  <strong className="text-white block text-sm">Real-Time Ingestion</strong>
+                  <p className="text-xs text-zinc-400 leading-relaxed">
+                    Live stream feeds incoming tweets from top crypto leaders, showing user verification status, follower count, media, and exact publication time.
+                  </p>
+                </div>
+
+                <div className="p-4 bg-zinc-900/90 border border-zinc-800 rounded-xl space-y-2">
+                  <div className="w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 font-bold text-xs">
+                    02
+                  </div>
+                  <strong className="text-white block text-sm">Automated Ticker Parsing</strong>
+                  <p className="text-xs text-zinc-400 leading-relaxed">
+                    Our narrative engine automatically parses tweet context to suggest relevant token names and ticker symbols ($TICKER) for immediate community consensus.
+                  </p>
+                </div>
+
+                <div className="p-4 bg-zinc-900/90 border border-zinc-800 rounded-xl space-y-2">
+                  <div className="w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 font-bold text-xs">
+                    03
+                  </div>
+                  <strong className="text-white block text-sm">1-Click Fast Launch</strong>
+                  <p className="text-xs text-zinc-400 leading-relaxed">
+                    Auto-populates media images as token logo, formats tweet quote descriptions with source attribution, and sets the official website URL directly to the tweet post.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 bg-zinc-900/80 border border-yellow-500/20 rounded-xl text-xs space-y-2">
+                <span className="font-bold text-yellow-400 flex items-center space-x-2 text-sm">
+                  <Rocket className="w-4 h-4" />
+                  <span>Instant Narrative Token Dynamics</span>
+                </span>
+                <ul className="list-disc list-inside space-y-1.5 text-zinc-300">
+                  <li><strong>0.0005 ETH Launch Fee:</strong> Affordable, anti-spam deployment fee paid to Robinhood Chain Pons v2 factory.</li>
+                  <li><strong>Post Link as Official Website:</strong> Every token launched from a tweet automatically links to the authentic tweet URL on the token explorer page, preserving provenance.</li>
+                  <li><strong>Zero 5-Year Lockups:</strong> Tokens launched through LOCKEY have no forced 5-year vesting or lockup mechanisms, ensuring 100% fair and dynamic community market-making.</li>
+                  <li><strong>Instant Snipe Protection:</strong> 5-second 99% decaying anti-snipe tax shields human traders from automated MEV bots upon launch.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
           {/* 1. OVERVIEW */}
           <section id="overview" className="scroll-mt-24 space-y-4">
             <div className="border-b border-zinc-800 pb-3">
-              <h2 className="text-2xl font-black text-white">Protocol Overview</h2>
+              <h2 className="text-2xl font-black text-white">1. Protocol Overview</h2>
               <p className="text-xs text-slate-400">Non-custodial token launch and decentralized trading protocol on Robinhood Chain</p>
             </div>
 
@@ -276,7 +344,7 @@ export default function DocsPage() {
                   <span>Bonding Curve Trading</span>
                 </h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  The public can immediately buy and sell tokens using USDC. Each swap shifts the spot price algorithmically according to x * y = k with zero initial liquidity funding required.
+                  The public can immediately buy and sell tokens using native ETH. Each swap shifts the spot price algorithmically according to x * y = k with zero initial liquidity funding required.
                 </p>
               </div>
 
@@ -299,10 +367,10 @@ export default function DocsPage() {
                 </div>
                 <h3 className="text-white font-bold text-sm flex items-center space-x-2">
                   <Flame className="w-4 h-4 text-rose-400" />
-                  <span>DEX Graduation & Permanent LP Burn</span>
+                  <span>DEX Graduation &amp; Permanent LP Lock</span>
                 </h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Upon hitting the $20,000 USDC market cap target, curve trading concludes. Accumulated USDC (~$5,000) and 200M escrowed tokens are seeded into Uniswap v4, and the LP position NFT is permanently burned to 0xdead (Zero-Rug Guarantee).
+                  Upon reaching the 4.2 ETH liquidity target, curve trading concludes. Accumulated ETH and 200M reserved tokens are seeded into Uniswap v4, and the LP position is permanently locked in Launch Locker (Zero-Rug Guarantee).
                 </p>
               </div>
 
@@ -312,10 +380,10 @@ export default function DocsPage() {
                 </div>
                 <h3 className="text-white font-bold text-sm flex items-center space-x-2">
                   <Coins className="w-4 h-4 text-sky-400" />
-                  <span>Creator Royalties & Instant Claims</span>
+                  <span>Creator Royalties &amp; Instant Claims</span>
                 </h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Creators earn 1% - 5% on every curve trade. USDC earnings safely accumulate in FeeManager and can be withdrawn anytime with a single click via the Creator Dashboard.
+                  Creators earn 0% - 5% on every curve trade. ETH royalties safely accumulate in Fee Escrow and can be withdrawn anytime with a single click via the Creator Dashboard.
                 </p>
               </div>
             </div>
@@ -324,7 +392,7 @@ export default function DocsPage() {
           {/* 3. HOW LAUNCHES WORK */}
           <section id="launches" className="scroll-mt-24 space-y-4">
             <div className="border-b border-sky-500/20 pb-3">
-              <h2 className="text-2xl font-black text-white">1. Token Launch Mechanism</h2>
+              <h2 className="text-2xl font-black text-white">3. Token Launch Mechanism</h2>
               <p className="text-xs text-slate-400">Atomic creation of fixed-supply tokens and AMM bonding curve pools</p>
             </div>
 
@@ -696,7 +764,6 @@ export default function DocsPage() {
                 { role: "Launch Factory", address: CONTRACT_ADDRESSES.factory, note: "Deploys each launch, pins economics, drives graduation" },
                 { role: "Launch & Buy Router", address: CONTRACT_ADDRESSES.launchAndBuy, note: "Atomic create + opening buy router" },
                 { role: "Fee Escrow", address: CONTRACT_ADDRESSES.feeEscrow, note: "Holds claimable creator royalties & protocol balances" },
-                { role: "Buyback Vault", address: CONTRACT_ADDRESSES.buybackVault, note: "Holds bought-back supply vesting linearly over 5 years" },
                 { role: "Launch Locker", address: CONTRACT_ADDRESSES.launchLocker, note: "Permanently locks graduated Uniswap v4 positions" },
                 { role: "Meme Hook", address: CONTRACT_ADDRESSES.memeHook, note: "Singleton Uniswap v4 fee accrual and distribution hook" },
               ].map((item, idx) => (
