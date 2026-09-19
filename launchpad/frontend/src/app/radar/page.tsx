@@ -255,14 +255,14 @@ export default function RadarPage() {
               >
                 {/* New post tag */}
                 {isNew && (
-                  <div className="absolute -top-2.5 right-4 px-2 py-0.5 rounded-md bg-yellow-400 text-black font-mono font-bold text-[10px] shadow-sm flex items-center space-x-1">
-                    <Sparkles className="w-2.5 h-2.5 text-black" />
+                  <div className="absolute top-3.5 right-3.5 px-2.5 py-1 rounded-full bg-yellow-400 text-black font-sans font-extrabold text-[10px] tracking-wider shadow-sm flex items-center gap-1 leading-none select-none">
+                    <Sparkles className="w-2.5 h-2.5 fill-black text-black shrink-0" />
                     <span>NEW</span>
                   </div>
                 )}
 
                 {/* Top Author Row */}
-                <div className="flex items-start space-x-3">
+                <div className="flex items-start space-x-3 pr-16">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={tweet.author.profileImageUrl}
