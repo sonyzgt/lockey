@@ -19,6 +19,7 @@ import {
   X,
   CheckCircle2,
   AlertCircle,
+  Radar,
 } from "lucide-react";
 import { CONTRACT_ADDRESSES } from "@/config/chain";
 import { PONS_CURVE_ABI, PONS_FACTORY_ABI, PONS_TOKEN_ABI } from "@/config/abis";
@@ -346,6 +347,14 @@ export default function HomePage() {
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin text-emerald-400" : ""}`} />
             </button>
+
+            <Link
+              href="/radar"
+              className="inline-flex items-center space-x-2 px-4 py-2.5 sketch-btn-secondary text-emerald-300 hover:text-white font-bold text-sm shrink-0 border border-emerald-500/60"
+            >
+              <Radar className="w-4 h-4 text-emerald-400 animate-pulse" />
+              <span>X Radar (j7tracker)</span>
+            </Link>
 
             <Link
               href="/create"

@@ -38,6 +38,27 @@ export default function CreateTokenPage() {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  // Pre-fill from URL query parameters (from X Narrative Radar)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const searchParams = new URLSearchParams(window.location.search);
+      const qName = searchParams.get("name");
+      const qSymbol = searchParams.get("symbol");
+      const qDesc = searchParams.get("desc") || searchParams.get("description");
+      const qLogo = searchParams.get("logo") || searchParams.get("imageUrl");
+      const qTwitter = searchParams.get("twitter");
+
+      if (qName) setName(qName);
+      if (qSymbol) setSymbol(qSymbol);
+      if (qDesc) setDescription(qDesc);
+      if (qLogo) {
+        setImageUrl(qLogo);
+        setImagePreview(qLogo);
+      }
+      if (qTwitter) setTwitter(qTwitter);
+    }
+  }, []);
+
   const uploadToPinata = async (file: File) => {
     setIsUploadingImage(true);
     setUploadError(null);
