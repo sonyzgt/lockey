@@ -206,9 +206,9 @@ export default function RadarPage() {
       {/* Subtle Live Stream Status & Filter */}
       <div className="flex items-center justify-between px-1 text-xs font-mono">
         <div className="flex items-center space-x-2">
-          <span className={`w-2 h-2 rounded-full ${isSseConnected ? "bg-emerald-400 animate-ping" : "bg-emerald-400"}`}></span>
-          <span className="text-emerald-400 font-bold tracking-wide">LIVE POSTS</span>
-          <span className="text-slate-400">({filteredTweets.length})</span>
+          <span className={`w-2 h-2 rounded-full ${isSseConnected ? "bg-yellow-400 animate-ping" : "bg-yellow-400"}`}></span>
+          <span className="text-yellow-400 font-bold tracking-wide">LIVE POSTS</span>
+          <span className="text-zinc-500">({filteredTweets.length})</span>
         </div>
 
         <input
@@ -216,7 +216,7 @@ export default function RadarPage() {
           placeholder="Filter $ticker or @user..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="px-3 py-1 rounded-md bg-[#0a1b12] border border-emerald-900/80 text-xs text-white placeholder-emerald-700/80 focus:outline-none focus:border-emerald-500 w-44 sm:w-56 font-mono"
+          className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700/80 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-yellow-400 w-44 sm:w-56 font-mono transition-colors"
         />
       </div>
 
@@ -224,15 +224,15 @@ export default function RadarPage() {
       <div className="max-h-[82vh] overflow-y-auto space-y-3 pr-1.5 custom-scrollbar">
         {isInitialLoading && tweets.length === 0 ? (
           <div className="p-16 text-center space-y-3">
-            <div className="w-7 h-7 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="font-mono text-xs text-emerald-400">
+            <div className="w-6 h-6 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="font-mono text-xs text-yellow-400">
               Connecting to live radar feed...
             </p>
           </div>
         ) : filteredTweets.length === 0 ? (
-          <div className="p-12 text-center space-y-2 bg-[#081b10] rounded-xl border border-dashed border-emerald-900">
-            <AlertCircle className="w-6 h-6 text-emerald-400 mx-auto opacity-70" />
-            <p className="font-mono text-xs text-emerald-300">
+          <div className="p-12 text-center space-y-2 bg-zinc-900/40 rounded-xl border border-zinc-800">
+            <AlertCircle className="w-6 h-6 text-yellow-400 mx-auto opacity-70" />
+            <p className="font-mono text-xs text-zinc-400">
               {searchQuery ? "No posts match your filter." : "No posts captured in stream yet."}
             </p>
           </div>
@@ -249,14 +249,14 @@ export default function RadarPage() {
             return (
               <div
                 key={tweet.id}
-                className={`bg-[#0a1610] border border-emerald-900/80 hover:border-emerald-500/70 rounded-xl p-4 transition-all space-y-3 relative group ${
-                  isNew ? "border-emerald-400/90 shadow-[0_0_12px_rgba(52,211,153,0.25)]" : ""
+                className={`bg-[#121318] border border-zinc-800/90 hover:border-yellow-500/50 rounded-xl p-4 transition-all space-y-3 relative group shadow-sm ${
+                  isNew ? "border-yellow-400/90 shadow-[0_0_14px_rgba(250,204,21,0.2)]" : ""
                 }`}
               >
                 {/* New post tag */}
                 {isNew && (
-                  <div className="absolute -top-2.5 right-4 px-2 py-0.5 rounded-full bg-emerald-400 text-slate-950 font-mono font-bold text-[10px] shadow-sm flex items-center space-x-1">
-                    <Sparkles className="w-2.5 h-2.5 text-slate-950" />
+                  <div className="absolute -top-2.5 right-4 px-2 py-0.5 rounded-md bg-yellow-400 text-black font-mono font-bold text-[10px] shadow-sm flex items-center space-x-1">
+                    <Sparkles className="w-2.5 h-2.5 text-black" />
                     <span>NEW</span>
                   </div>
                 )}
@@ -267,30 +267,30 @@ export default function RadarPage() {
                   <img
                     src={tweet.author.profileImageUrl}
                     alt={tweet.author.name}
-                    className="w-10 h-10 rounded-full border border-emerald-500/50 object-cover shrink-0 mt-0.5"
+                    className="w-10 h-10 rounded-full border border-yellow-500/40 object-cover shrink-0 mt-0.5"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = "/lockey-logo.svg";
                     }}
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-1.5 flex-wrap">
-                      <span className="font-bold text-white text-sm hover:underline cursor-pointer">
+                      <span className="font-bold text-white text-sm hover:text-yellow-400 transition-colors cursor-pointer">
                         {tweet.author.name}
                       </span>
                       {tweet.author.verified && (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 fill-sky-400/20 shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400/20 shrink-0" />
                       )}
-                      <span className="text-[11px] font-mono text-slate-400">
+                      <span className="text-[11px] font-mono text-zinc-400">
                         {formatExactTime(tweet.createdAt)}
                       </span>
-                      <span className="text-[11px] font-mono text-emerald-500/70">
+                      <span className="text-[11px] font-mono text-yellow-500/80">
                         ({formatTimeAgo(tweet.createdAt)})
                       </span>
                     </div>
-                    <div className="flex items-center space-x-2 text-xs font-mono text-slate-400 mt-0.5">
+                    <div className="flex items-center space-x-2 text-xs font-mono text-zinc-400 mt-0.5">
                       <span>@{tweet.author.username}</span>
                       {replyHandle && (
-                        <span className="text-emerald-400/80">
+                        <span className="text-yellow-400/90">
                           ↳ replied to @{replyHandle}
                         </span>
                       )}
@@ -299,13 +299,13 @@ export default function RadarPage() {
                 </div>
 
                 {/* Tweet Body Content */}
-                <p className="text-sm text-slate-200 leading-relaxed whitespace-pre-line font-sans pl-1">
+                <p className="text-sm text-zinc-200 leading-relaxed whitespace-pre-line font-sans pl-1">
                   {tweet.text}
                 </p>
 
                 {/* Attached Media / Image Preview */}
                 {primaryMedia && (
-                  <div className="rounded-lg overflow-hidden border border-emerald-900/60 max-h-72 bg-black/50 flex items-center justify-center">
+                  <div className="rounded-lg overflow-hidden border border-zinc-800 max-h-72 bg-black/60 flex items-center justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={primaryMedia}
@@ -319,26 +319,26 @@ export default function RadarPage() {
                 )}
 
                 {/* Bottom Action & Launch Bar */}
-                <div className="pt-2.5 border-t border-emerald-950 flex flex-wrap items-center justify-between gap-2.5">
+                <div className="pt-2.5 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5">
                   {/* Metrics */}
-                  <div className="flex items-center space-x-4 text-xs font-mono text-slate-400">
-                    <span className="flex items-center space-x-1 hover:text-rose-400 cursor-pointer">
+                  <div className="flex items-center space-x-4 text-xs font-mono text-zinc-400">
+                    <span className="flex items-center space-x-1 hover:text-rose-400 cursor-pointer transition-colors">
                       <Heart className="w-3.5 h-3.5 text-rose-400/80" />
                       <span>{tweet.metrics?.likes.toLocaleString() ?? 0}</span>
                     </span>
-                    <span className="flex items-center space-x-1 hover:text-emerald-400 cursor-pointer">
-                      <Repeat className="w-3.5 h-3.5 text-emerald-400/80" />
+                    <span className="flex items-center space-x-1 hover:text-yellow-400 cursor-pointer transition-colors">
+                      <Repeat className="w-3.5 h-3.5 text-yellow-400/80" />
                       <span>{tweet.metrics?.retweets.toLocaleString() ?? 0}</span>
                     </span>
-                    <span className="flex items-center space-x-1 hover:text-sky-400 cursor-pointer">
+                    <span className="flex items-center space-x-1 hover:text-sky-400 cursor-pointer transition-colors">
                       <MessageCircle className="w-3.5 h-3.5 text-sky-400/80" />
                       <span>{tweet.metrics?.replies.toLocaleString() ?? 0}</span>
                     </span>
 
                     {/* Suggested token pill */}
-                    <div className="flex items-center space-x-1.5 pl-2 border-l border-emerald-900/60">
-                      <span className="text-[11px] text-slate-400">Ticker:</span>
-                      <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-600/70 text-emerald-300 font-bold font-mono text-xs">
+                    <div className="flex items-center space-x-1.5 pl-2 border-l border-zinc-800">
+                      <span className="text-[11px] text-zinc-400">Ticker:</span>
+                      <span className="px-2 py-0.5 rounded bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 font-bold font-mono text-xs">
                         ${tweet.suggestedToken?.symbol || "TOKEN"}
                       </span>
                     </div>
@@ -347,7 +347,7 @@ export default function RadarPage() {
                   {/* Instant Launch Button */}
                   <button
                     onClick={() => setSelectedTweetForLaunch(tweet)}
-                    className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs flex items-center space-x-1.5 shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="px-3.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black font-bold font-mono text-xs flex items-center space-x-1.5 shadow-sm hover:brightness-105 active:translate-y-0.5 transition-all"
                   >
                     <Rocket className="w-3.5 h-3.5" />
                     <span>Launch Token</span>
@@ -360,7 +360,7 @@ export default function RadarPage() {
       </div>
 
       {/* Stream Boundary Footer */}
-      <div className="py-4 text-center text-xs font-mono text-emerald-600/80">
+      <div className="py-4 text-center text-xs font-mono text-zinc-500">
         ── • Live Stream Connected ({tweets.length} posts) • ──
       </div>
 

@@ -356,24 +356,22 @@ export default function CreateTokenPage() {
     <div className="max-w-5xl mx-auto space-y-8 pb-20">
       {/* Header Banner */}
       <div className="space-y-2">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 sketch-badge bg-[#0c2e1b] text-emerald-300 text-xs font-hand font-bold tracking-wide border border-emerald-500/40">
-          <Sparkles className="w-4 h-4 text-emerald-400" />
-          <span>Creator&apos;s Blueprint • Pons v2 on Robinhood Chain</span>
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-yellow-400/10 text-yellow-400 text-xs font-mono font-bold tracking-wide border border-yellow-400/30">
+          <Sparkles className="w-4 h-4 text-yellow-400" />
+          <span>Creator Blueprint • Pons v2 on Robinhood Chain</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl font-kalam font-bold text-white tracking-wide flex items-center space-x-2">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight flex items-center space-x-2">
           <span>Launch Meme Token</span>
           <span className="text-3xl">🚀</span>
         </h1>
-        <p className="text-base font-hand text-emerald-200/90">
-          Deploy token with automated bonding curve & liquidity migration to Uniswap v4 on Robinhood Chain (Zero-Rug Guarantee).
+        <p className="text-sm text-zinc-400">
+          Deploy token with automated bonding curve &amp; liquidity migration to Uniswap v4 on Robinhood Chain (Zero-Rug Guarantee).
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Form: Blueprint Sketchpad */}
-        <form onSubmit={handleDeploy} className="lg:col-span-7 space-y-6 sketch-card p-6 sm:p-8 relative bg-[#092214]">
-          {/* Top Mint Tape */}
-          <div className="hidden sm:block absolute -top-3 left-10 w-28 h-5 bg-emerald-400/35 border border-dashed border-emerald-400 rotate-1 pointer-events-none"></div>
+        <form onSubmit={handleDeploy} className="lg:col-span-7 space-y-6 bg-[#121318] border border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-sm relative">
 
           <div className="space-y-5">
             <div>
@@ -531,10 +529,10 @@ export default function CreateTokenPage() {
                   onDrop={handleDrop}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
-                  className={`relative border-2 border-dashed rounded-sketch p-6 text-center transition cursor-pointer ${
+                  className={`relative border-2 border-dashed rounded-xl p-6 text-center transition cursor-pointer ${
                     isDragging
-                      ? "border-sky-400 bg-sky-500/10"
-                      : "border-slate-600 hover:border-sky-400 sketch-surface"
+                      ? "border-yellow-400 bg-yellow-400/10"
+                      : "border-zinc-750 hover:border-yellow-400/80 bg-zinc-950/60"
                   }`}
                 >
                   <input
@@ -618,7 +616,7 @@ export default function CreateTokenPage() {
             </div>
 
             {/* Optional Dev Buy Section */}
-            <div className="pt-4 border-t-2 border-dashed border-slate-700 space-y-3">
+            <div className="pt-4 border-t border-zinc-800 space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-base font-hand font-bold text-slate-200 flex items-center space-x-1.5">
                   <Coins className="w-4 h-4 text-yellow-300" />
@@ -723,36 +721,33 @@ export default function CreateTokenPage() {
           </div>
         </form>
 
-        {/* Right Column: Live Doodle Index Card Preview */}
+        {/* Right Column: Live Card Preview */}
         <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
-          <div className="sketch-card p-6 space-y-4 relative bg-[#092214]">
-            {/* Top Mint Tape */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-5 bg-emerald-400/40 border border-dashed border-emerald-400 -rotate-1 pointer-events-none"></div>
-
-            <div className="flex items-center justify-between border-b-2 border-dashed border-emerald-800/80 pb-3">
-              <span className="font-hand text-base font-bold text-emerald-300 uppercase tracking-wider flex items-center space-x-1">
-                <Sparkles className="w-4 h-4 text-emerald-400" />
+          <div className="p-6 space-y-4 relative bg-[#121318] border border-zinc-800 rounded-2xl shadow-sm">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <span className="text-sm font-semibold text-yellow-400 uppercase tracking-wider flex items-center space-x-1.5">
+                <Sparkles className="w-4 h-4 text-yellow-400" />
                 <span>Token Card Preview</span>
               </span>
-              <span className="text-xs font-mono sketch-badge px-2 py-0.5 bg-[#0c2e1b] text-emerald-300 border border-emerald-600/40">
+              <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-yellow-400/10 text-yellow-400 border border-yellow-400/30">
                 Live Draft
               </span>
             </div>
 
             <div className="flex items-start space-x-4 pt-1">
-              <div className="w-16 h-16 rounded-sketch overflow-hidden bg-[#041208] border-2 border-emerald-400 shrink-0 flex items-center justify-center shadow-sketch-sm">
+              <div className="w-16 h-16 rounded-xl overflow-hidden bg-zinc-950 border border-yellow-500/40 shrink-0 flex items-center justify-center p-1">
                 {imagePreview ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={imagePreview} alt="Preview" className="w-full h-full object-cover rounded-sketch" />
+                  <img src={imagePreview} alt="Preview" className="w-full h-full object-cover rounded-lg" />
                 ) : (
                   <span className="text-2xl">🪙</span>
                 )}
               </div>
               <div className="min-w-0">
-                <h3 className="text-2xl font-kalam font-bold text-white truncate">
+                <h3 className="text-xl font-bold text-white truncate">
                   {name.trim() || "Your Token Name"}
                 </h3>
-                <span className="text-sm px-2.5 py-0.5 sketch-badge bg-emerald-500/20 text-emerald-300 font-mono font-bold uppercase border border-emerald-500/40">
+                <span className="text-xs px-2.5 py-0.5 rounded-md bg-yellow-400/10 text-yellow-400 font-mono font-bold uppercase border border-yellow-400/30">
                   ${symbol.trim() || "TICKER"}
                 </span>
               </div>

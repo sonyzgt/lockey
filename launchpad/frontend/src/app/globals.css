@@ -3,40 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --background: #05140b;
-  --foreground: #f0fdf4;
+  --background: #090a0f;
+  --foreground: #f4f4f5;
 }
 
 body {
   color: var(--foreground);
-  background-color: #05140b;
-  /* Deep Emerald Forest Notebook / Graph Paper Background matching Lockey Logo */
+  background-color: #090a0f;
+  /* Clean modern flat dark surface with subtle ambient yellow glow */
   background-image: 
-    linear-gradient(rgba(34, 197, 94, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 197, 94, 0.08) 1px, transparent 1px),
-    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(34, 197, 94, 0.22), transparent 75%),
-    radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.12), transparent 60%);
-  background-size: 24px 24px, 24px 24px, 100% 100%, 100% 100%;
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234, 179, 8, 0.08), transparent 70%),
+    radial-gradient(circle at 90% 80%, rgba(202, 138, 4, 0.04), transparent 50%);
   background-attachment: fixed;
   min-height: 100vh;
 }
 
-/* Custom Emerald Sketch Scrollbar */
+/* Custom Flat Yellow Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #05140b;
-  border-left: 2px solid #0d2f1b;
+  background: #090a0f;
 }
 ::-webkit-scrollbar-thumb {
-  background: #166534;
-  border: 2px solid #000000;
-  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  background: #27272a;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #22c55e;
+  background: #ca8a04;
 }
 
 @layer utilities {
@@ -45,157 +40,146 @@ body {
   }
 
   /* =========================================================================
-     EMERALD GREEN HAND-DRAWN / SKETCHBOOK UI DESIGN SYSTEM
+     FLAT UI YELLOW DESIGN SYSTEM
      ========================================================================= */
 
-  /* Primary Sketch Card in Emerald Green */
+  /* Flat Cards */
   .sketch-card,
-  .clay-card {
-    background-color: #082113;
-    border: 2.5px solid #1a6336;
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    box-shadow: 4px 4px 0px 0px #000000;
-    transition: all 0.2s ease-in-out;
+  .clay-card,
+  .flat-card {
+    background-color: #121318;
+    border: 1px solid #27272a;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
+    transition: all 0.15s ease-in-out;
   }
   .sketch-card:hover,
-  .clay-card:hover {
-    border-color: #22c55e;
-    box-shadow: 5px 6px 0px 0px #000000;
-    transform: translateY(-2px);
+  .clay-card:hover,
+  .flat-card:hover {
+    border-color: rgba(234, 179, 8, 0.45);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4);
   }
 
-  /* Secondary Emerald Surface */
+  /* Flat Secondary Surface */
   .sketch-surface,
-  .clay-surface {
-    background-color: #0c2d1b;
-    border: 2px solid #1a5b34;
-    border-radius: 15px 225px 15px 255px/255px 15px 225px 15px;
-    box-shadow: 3px 3px 0px 0px #000000;
+  .clay-surface,
+  .flat-surface {
+    background-color: #161820;
+    border: 1px solid #27272a;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
   }
 
-  /* Sketch Inset Note Box */
+  /* Flat Input / Inset Box */
   .sketch-inset,
-  .clay-inset {
-    background-color: #041208;
-    border: 2px solid #134e2c;
-    border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
-    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.7);
+  .clay-inset,
+  .flat-inset {
+    background-color: #0c0d12;
+    border: 1px solid #27272a;
+    border-radius: 8px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
   .sketch-inset:focus-within,
-  .clay-inset:focus-within {
-    border-color: #22c55e;
-    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25), inset 2px 2px 4px rgba(0, 0, 0, 0.7);
+  .clay-inset:focus-within,
+  .flat-inset:focus-within {
+    border-color: #facc15;
+    box-shadow: 0 0 0 1px #facc15;
   }
 
-  /* Vibrant Emerald Neon Green Hand-Drawn Primary Button */
+  /* Flat Yellow Primary Button */
   .sketch-btn-primary,
-  .clay-btn-primary {
-    background-color: #22c55e;
-    color: #021a0a !important;
-    border: 2.5px solid #000000;
-    border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
-    box-shadow: 3px 3px 0px 0px #000000;
-    font-family: var(--font-hand), "Patrick Hand", cursive, sans-serif;
-    letter-spacing: 0.02em;
-    transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  .clay-btn-primary,
+  .flat-btn-primary {
+    background-color: #facc15;
+    color: #000000 !important;
+    border: 1px solid #eab308;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+    transition: all 0.12s ease-in-out;
     cursor: pointer;
   }
   .sketch-btn-primary:hover,
-  .clay-btn-primary:hover {
-    background-color: #4ade80;
-    transform: translateY(-2px) rotate(-0.5deg);
-    box-shadow: 5px 5px 0px 0px #000000;
+  .clay-btn-primary:hover,
+  .flat-btn-primary:hover {
+    background-color: #fde047;
+    border-color: #facc15;
+    box-shadow: 0 2px 6px 0 rgba(234, 179, 8, 0.3);
   }
   .sketch-btn-primary:active,
-  .clay-btn-primary:active {
-    transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0px 0px #000000;
+  .clay-btn-primary:active,
+  .flat-btn-primary:active {
+    background-color: #eab308;
+    transform: translateY(1px);
   }
 
-  /* Hand-Drawn Secondary Button (Dark Emerald Outline Sketch) */
+  /* Flat Secondary Button */
   .sketch-btn-secondary,
-  .clay-btn-secondary {
-    background-color: #0b2817;
-    color: #e2fbe8;
-    border: 2px solid #1a6336;
-    border-radius: 225px 20px 255px 20px/20px 255px 20px 225px;
-    box-shadow: 3px 3px 0px 0px #000000;
-    font-family: var(--font-hand), "Patrick Hand", cursive, sans-serif;
-    transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  .clay-btn-secondary,
+  .flat-btn-secondary {
+    background-color: #161820;
+    color: #facc15;
+    border: 1px solid rgba(234, 179, 8, 0.3);
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.12s ease-in-out;
     cursor: pointer;
   }
   .sketch-btn-secondary:hover,
-  .clay-btn-secondary:hover {
-    background-color: #113922;
-    border-color: #22c55e;
-    transform: translateY(-1px) rotate(0.5deg);
-    box-shadow: 4px 4px 0px 0px #000000;
+  .clay-btn-secondary:hover,
+  .flat-btn-secondary:hover {
+    background-color: #22242e;
+    border-color: #facc15;
+    color: #ffffff;
   }
   .sketch-btn-secondary:active,
-  .clay-btn-secondary:active {
-    transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0px 0px #000000;
+  .clay-btn-secondary:active,
+  .flat-btn-secondary:active {
+    background-color: #121318;
+    transform: translateY(1px);
   }
 
-  /* Mint Green Highlight Button */
+  /* Flat Accent Highlight Button */
   .sketch-btn-mint {
-    background-color: #86efac;
-    color: #021a0a !important;
-    border: 2.5px solid #000000;
-    border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
-    box-shadow: 3px 3px 0px 0px #000000;
-    font-family: var(--font-hand), "Patrick Hand", cursive, sans-serif;
+    background-color: #fef08a;
+    color: #000000 !important;
+    border: 1px solid #facc15;
+    border-radius: 8px;
+    font-weight: 600;
     transition: all 0.12s ease-in-out;
   }
   .sketch-btn-mint:hover {
-    background-color: #bbf7d0;
-    transform: translateY(-2px);
-    box-shadow: 5px 5px 0px 0px #000000;
+    background-color: #facc15;
   }
 
-  /* Hand-Drawn Emerald Badge / Sticker */
+  /* Flat Yellow Badge */
   .sketch-badge,
-  .clay-badge {
-    background-color: #0c2e1b;
-    border: 1.5px solid #1a6336;
-    border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
-    box-shadow: 2px 2px 0px 0px #000000;
-    font-family: var(--font-hand), "Patrick Hand", cursive, sans-serif;
+  .clay-badge,
+  .flat-badge {
+    background-color: rgba(234, 179, 8, 0.1);
+    color: #facc15;
+    border: 1px solid rgba(234, 179, 8, 0.25);
+    border-radius: 6px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 600;
   }
 
-  /* Mint-Green Translucent Masking Tape Effect */
+  /* Remove tape overlays completely */
   .sketch-tape {
-    position: relative;
+    display: none !important;
   }
   .sketch-tape::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-1deg);
-    width: 90px;
-    height: 20px;
-    background: rgba(74, 222, 128, 0.4);
-    border: 1px dashed rgba(34, 197, 94, 0.7);
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
-    z-index: 10;
-    pointer-events: none;
+    display: none !important;
   }
 
-  /* Hand-drawn Hatched Emerald Progress Bar */
+  /* Flat Progress Bar */
   .sketch-progress-bar {
-    background-image: repeating-linear-gradient(
-      45deg,
-      rgba(255, 255, 255, 0.2),
-      rgba(255, 255, 255, 0.2) 10px,
-      transparent 10px,
-      transparent 20px
-    );
+    background-color: #facc15;
   }
 
-  /* Squiggly Green Underline */
+  /* Clean yellow underline */
   .sketch-squiggly {
-    text-decoration: underline wavy #22c55e 2px;
+    text-decoration: underline #facc15 2px;
     text-underline-offset: 4px;
   }
 }

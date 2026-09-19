@@ -317,9 +317,9 @@ export function RealTradingChart({
   }, [yMin, yMax, graphHeight, padding.top]);
 
   return (
-    <div className="sketch-card p-5 sm:p-6 space-y-6">
+    <div className="sketch-card p-5 sm:p-6 space-y-6 bg-[#121318] border border-zinc-800 rounded-2xl">
       {/* Chart Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1a6336] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
         {/* Left: Price & Market Cap Real-Time */}
         <div className="space-y-1">
           <div className="flex items-center space-x-3">
@@ -328,7 +328,7 @@ export function RealTradingChart({
                 ? formatUsd(currentPriceUsd)
                 : formatUsd(currentMcUsd)}
             </span>
-            <span className="text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-2 py-0.5 rounded-md">
+            <span className="text-xs font-mono text-yellow-400 bg-yellow-400/10 border border-yellow-400/30 px-2 py-0.5 rounded-md">
               {activeMetric === "price"
                 ? `${currentPriceDisplay < 0.0001 ? currentPriceDisplay.toFixed(9) : currentPriceDisplay.toFixed(6)} ETH`
                 : `${currentMcDisplay.toFixed(3)} ETH`}
@@ -351,7 +351,7 @@ export function RealTradingChart({
 
           <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-slate-400">
             <span>
-              Pair: <strong className="text-emerald-300">{tokenSymbol}/ETH</strong>
+              Pair: <strong className="text-yellow-400">{tokenSymbol}/ETH</strong>
             </span>
             <span>•</span>
             <span>
@@ -367,7 +367,7 @@ export function RealTradingChart({
             </span>
             <span>•</span>
             <span>
-              Total Vol: <strong className="text-emerald-400 font-bold">{formatUsd(totalVolumeUSD)}</strong> <span className="text-slate-500 text-[11px]">({totalVolumeETH.toFixed(3)} ETH)</span>
+              Total Vol: <strong className="text-yellow-400 font-bold">{formatUsd(totalVolumeUSD)}</strong> <span className="text-slate-500 text-[11px]">({totalVolumeETH.toFixed(3)} ETH)</span>
             </span>
           </div>
         </div>
@@ -375,8 +375,8 @@ export function RealTradingChart({
         {/* Right: Metric Switcher & Live Indicator */}
         <div className="flex items-center space-x-2 shrink-0">
           {/* Market Status Indicator */}
-          <div className="sketch-badge px-2.5 py-1 text-[11px] font-mono flex items-center space-x-1.5 text-emerald-300">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <div className="px-2.5 py-1 text-[11px] font-mono flex items-center space-x-1.5 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 rounded-md">
+            <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
             <span>{isGraduated ? "Uniswap v4 Pool" : "Robinhood On-Chain"}</span>
           </div>
 
@@ -610,9 +610,9 @@ export function RealTradingChart({
         </div>
 
         {trades.length > 0 ? (
-          <div className="max-h-[240px] overflow-y-auto overflow-x-auto rounded-xl border border-[#1a6336] bg-[#05170d]/90">
+          <div className="max-h-[240px] overflow-y-auto overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950/90">
             <table className="w-full text-left text-xs font-mono relative">
-              <thead className="sticky top-0 z-10 bg-[#0a2717] text-emerald-200 border-b border-[#1a6336] text-[11px] shadow-sm">
+              <thead className="sticky top-0 z-10 bg-zinc-900 text-zinc-300 border-b border-zinc-800 text-[11px] shadow-sm">
                 <tr>
                   <th className="py-2.5 px-3">Type</th>
                   <th className="py-2.5 px-3">Price (USD)</th>
@@ -622,7 +622,7 @@ export function RealTradingChart({
                   <th className="py-2.5 px-3 text-right">Explorer</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#134224] text-slate-200">
+              <tbody className="divide-y divide-zinc-800/80 text-zinc-200">
                 {trades
                   .slice()
                   .reverse()

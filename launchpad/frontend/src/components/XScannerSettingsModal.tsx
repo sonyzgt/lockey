@@ -98,36 +98,36 @@ export function XScannerSettingsModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-lg sketch-card bg-[#06180d] p-6 sm:p-8 space-y-6 shadow-sketch-lg border-2 border-emerald-500 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-[#121318] p-6 sm:p-8 space-y-6 shadow-2xl border border-zinc-800 rounded-2xl max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-dashed border-emerald-800/80">
+        <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-sketch bg-[#0c2e1b] border-2 border-emerald-400 flex items-center justify-center text-emerald-300">
-              <Key className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400">
+              <Key className="w-5 h-5 text-yellow-400" />
             </div>
             <div>
-              <h2 className="text-2xl font-kalam font-bold text-white tracking-wide">
+              <h2 className="text-xl font-extrabold text-white tracking-tight">
                 X Scanner Settings
               </h2>
-              <p className="text-xs font-hand text-emerald-300/80">
+              <p className="text-xs text-zinc-400">
                 Configure live X (Twitter) API &amp; monitored accounts
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 sketch-btn-secondary text-slate-400 hover:text-white"
+            className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* X Bearer Token Input */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-hand font-bold text-slate-200 flex items-center space-x-1.5">
+            <label className="text-xs font-semibold text-zinc-300 flex items-center space-x-1.5">
               <span>X (Twitter) API v2 Bearer Token</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-700/50">
+              <span className="text-[10px] px-2 py-0.5 rounded-md bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 font-mono">
                 Stored Locally
               </span>
             </label>
@@ -135,7 +135,7 @@ export function XScannerSettingsModal({
               <button
                 type="button"
                 onClick={handleClearToken}
-                className="text-[11px] font-hand text-rose-400 hover:underline"
+                className="text-[11px] text-rose-400 hover:underline font-mono"
               >
                 Clear Token
               </button>
@@ -214,20 +214,20 @@ export function XScannerSettingsModal({
             {trackedAccounts.map((handle) => (
               <span
                 key={handle}
-                className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-sketch bg-[#0c2e1b] border border-emerald-600/60 text-xs font-hand font-bold text-emerald-200"
+                className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-zinc-900 border border-yellow-500/30 text-xs font-mono font-semibold text-yellow-300"
               >
                 <span>@{handle}</span>
                 <button
                   type="button"
                   onClick={() => handleRemoveAccount(handle)}
-                  className="text-slate-400 hover:text-rose-400 transition-colors"
+                  className="text-zinc-400 hover:text-rose-400 transition-colors"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
               </span>
             ))}
             {trackedAccounts.length === 0 && (
-              <p className="text-xs font-hand text-slate-500 italic">
+              <p className="text-xs text-zinc-500 italic">
                 No accounts monitored. Add handles above.
               </p>
             )}
@@ -236,7 +236,7 @@ export function XScannerSettingsModal({
 
         {/* Auto-Refresh Interval */}
         <div className="space-y-2">
-          <label className="text-sm font-hand font-bold text-slate-200 block">
+          <label className="text-xs font-semibold text-zinc-300 block">
             Auto-Refresh Stream Interval
           </label>
           <div className="grid grid-cols-4 gap-2">
@@ -245,10 +245,10 @@ export function XScannerSettingsModal({
                 key={interval}
                 type="button"
                 onClick={() => setRefreshInterval(interval)}
-                className={`py-2 px-3 rounded-sketch text-xs font-hand font-bold transition ${
+                className={`py-2 px-3 rounded-lg text-xs font-mono font-semibold transition ${
                   refreshInterval === interval
-                    ? "sketch-btn-primary text-slate-950"
-                    : "sketch-btn-secondary text-slate-300"
+                    ? "bg-yellow-400 text-black font-bold shadow-sm"
+                    : "bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800"
                 }`}
               >
                 {interval === 0 ? "Manual" : `${interval}s`}
@@ -258,22 +258,22 @@ export function XScannerSettingsModal({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-end space-x-3 pt-4 border-t border-dashed border-emerald-800/80">
+        <div className="flex items-center justify-end space-x-3 pt-4 border-t border-zinc-800">
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2.5 sketch-btn-secondary text-sm font-hand text-slate-300"
+            className="px-5 py-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs font-semibold text-zinc-300 transition-colors"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleSave}
-            className="px-6 py-2.5 sketch-btn-primary text-slate-950 font-hand font-bold text-base flex items-center space-x-2"
+            className="px-6 py-2.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs flex items-center space-x-2 transition-colors shadow-sm"
           >
             {saveSuccess ? (
               <>
-                <Check className="w-4 h-4 text-emerald-950" />
+                <Check className="w-4 h-4 text-black" />
                 <span>Saved!</span>
               </>
             ) : (

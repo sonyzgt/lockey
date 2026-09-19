@@ -247,26 +247,26 @@ function ProtocolFeeSummaryCard({
   onClaimAll: () => void;
 }) {
   return (
-    <div className="clay-card p-6 sm:p-8 border border-[#1a6336] space-y-6">
+    <div className="bg-[#121318] border border-zinc-800 rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Total Protocol Fees */}
         <div className="md:col-span-2 space-y-4">
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
-              <span className="text-xs uppercase font-mono tracking-wider text-slate-400 font-semibold">
+              <span className="text-xs uppercase font-mono tracking-wider text-zinc-400 font-semibold">
                 Total Claimable Protocol Revenue
               </span>
-              <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-[10px] font-mono">
+              <span className="px-2 py-0.5 rounded-md bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-[10px] font-mono">
                 Instant ETH Payout
               </span>
             </div>
             <div className="flex items-baseline space-x-3">
-              <span className="text-4xl sm:text-5xl font-black font-mono text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">
+              <span className="text-4xl sm:text-5xl font-black font-mono text-yellow-400">
                 <TotalProtocolFeeAmount tokens={tokens} />
               </span>
-              <span className="text-base font-mono font-bold text-slate-400">ETH</span>
+              <span className="text-base font-mono font-bold text-zinc-400">ETH</span>
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed max-w-xl">
+            <p className="text-xs text-zinc-400 leading-relaxed max-w-xl font-sans">
               Accrues automatically on every buy and sell swap. Withdrawing sends 100% of accumulated protocol royalties directly to your wallet in native ETH.
             </p>
           </div>
@@ -275,29 +275,29 @@ function ProtocolFeeSummaryCard({
             <button
               onClick={onClaimAll}
               disabled={isBusy || !tokens || tokens.length === 0}
-              className="px-6 py-3.5 sketch-btn-primary text-slate-950 font-black text-sm inline-flex items-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-6 py-3.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-sm inline-flex items-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed shadow-sm transition-colors"
             >
-              <ArrowDownToLine className="w-4 h-4" />
+              <ArrowDownToLine className="w-4 h-4 text-black" />
               <span>{isBusy ? "Processing Claim..." : "Claim All Protocol Fees"}</span>
             </button>
           </div>
         </div>
 
         {/* Security & Config Info */}
-        <div className="clay-surface p-5 space-y-3 flex flex-col justify-between border border-[#1a6336]">
+        <div className="bg-zinc-900/80 p-5 space-y-3 flex flex-col justify-between border border-zinc-800 rounded-xl">
           <div className="space-y-2">
-            <div className="text-xs font-mono uppercase text-slate-400 font-semibold">
+            <div className="text-xs font-mono uppercase text-zinc-400 font-semibold">
               Protocol Specs
             </div>
-            <div className="space-y-1 text-xs">
-              <div className="flex justify-between py-1 border-b border-emerald-900/40">
-                <span className="text-slate-400">Protocol Fee:</span>
-                <span className="text-emerald-300 font-mono font-bold">
+            <div className="space-y-1 text-xs font-mono">
+              <div className="flex justify-between py-1 border-b border-zinc-800">
+                <span className="text-zinc-400">Protocol Fee:</span>
+                <span className="text-yellow-400 font-bold">
                   {(protocolFeeBps / 100).toFixed(2)}% (30 BPS)
                 </span>
               </div>
-              <div className="flex justify-between py-1 border-b border-emerald-900/40">
-                <span className="text-slate-400">Creator Royalty:</span>
+              <div className="flex justify-between py-1 border-b border-zinc-800">
+                <span className="text-zinc-400">Creator Royalty:</span>
                 <span className="text-emerald-300 font-mono font-bold">0.70% (Isolated)</span>
               </div>
               <div className="flex justify-between py-1">

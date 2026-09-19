@@ -60,56 +60,51 @@ export default function CreatorDashboardPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-20">
       <div className="space-y-2">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 sketch-badge bg-[#0c2d1b] text-emerald-300 text-xs font-hand font-bold tracking-wide">
-          <Sparkles className="w-4 h-4 text-emerald-400" />
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-yellow-400/10 text-yellow-400 text-xs font-mono font-bold tracking-wide border border-yellow-400/30">
+          <Sparkles className="w-4 h-4 text-yellow-400" />
           <span>Pons Protocol Payouts • Robinhood Chain</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl font-kalam font-bold text-white tracking-wide flex items-center space-x-2">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight flex items-center space-x-2">
           <span>Creator Royalty Fees</span>
           <span className="text-3xl">💰</span>
         </h1>
-        <p className="text-base font-hand text-slate-300">
+        <p className="text-sm text-zinc-400">
           Monitor trading royalties from tokens you have created and claim accumulated ETH directly from the Pons Fee Escrow contract.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div className="p-6 sketch-card space-y-2 relative">
-          <div className="sketch-tape -top-2.5 left-8 w-24 h-4 rotate-1"></div>
-          <span className="text-xs font-hand font-bold text-slate-400 uppercase tracking-wider block">Royalty Payout Asset</span>
-          <div className="text-3xl font-bold font-mono text-emerald-300">Native ETH</div>
-          <p className="text-xs font-hand text-slate-400 leading-relaxed">
+        <div className="p-6 bg-[#121318] border border-zinc-800 rounded-2xl space-y-2 shadow-sm">
+          <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Royalty Payout Asset</span>
+          <div className="text-3xl font-bold font-mono text-yellow-400">Native ETH</div>
+          <p className="text-xs text-zinc-400 leading-relaxed font-sans">
             Royalties are automatically accrued in native ETH on every buy &amp; sell trade across both the bonding curve and Uniswap v4.
           </p>
         </div>
 
-        <div className="p-6 sketch-card space-y-2 relative">
-          <div className="sketch-tape -top-2.5 right-8 w-24 h-4 -rotate-1"></div>
-          <span className="text-xs font-hand font-bold text-slate-400 uppercase tracking-wider block">Fee Escrow Contract</span>
-          <div className="text-xs font-mono text-emerald-400 truncate">
+        <div className="p-6 bg-[#121318] border border-zinc-800 rounded-2xl space-y-2 shadow-sm">
+          <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Fee Escrow Contract</span>
+          <div className="text-xs font-mono text-yellow-400 truncate">
             {CONTRACT_ADDRESSES.feeEscrow}
           </div>
-          <p className="text-xs font-hand text-slate-400 leading-relaxed">
+          <p className="text-xs text-zinc-400 leading-relaxed font-sans">
             Royalty funds are stored securely in an independent escrow contract and can be withdrawn anytime (pull-based withdrawal).
           </p>
         </div>
       </div>
 
       {/* Claim Voucher Card */}
-      <div className="sketch-card p-6 sm:p-8 space-y-6 relative bg-[#082113]">
-        {/* Top Tape */}
-        <div className="sketch-tape -top-3 left-1/2 -translate-x-1/2 w-36 h-5 rotate-1"></div>
-
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 pb-6 border-b-2 border-dashed border-[#1a6336]">
+      <div className="p-6 sm:p-8 space-y-6 bg-[#121318] border border-zinc-800 rounded-2xl shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 pb-6 border-b border-zinc-800">
           <div className="space-y-1">
-            <span className="text-xs font-hand font-bold text-slate-400 uppercase tracking-wider block">
+            <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">
               Claimable Royalty Balance
             </span>
             <div className="text-4xl sm:text-5xl font-bold font-mono text-white flex items-center space-x-3">
-              <Coins className="w-9 h-9 text-emerald-400" />
+              <Coins className="w-9 h-9 text-yellow-400" />
               <span>{formattedClaimable.toFixed(6)} ETH</span>
             </div>
-            <p className="text-xs font-hand text-slate-400">
+            <p className="text-xs text-zinc-400 font-sans">
               Available for withdrawal to your wallet anytime with zero vesting or lockup.
             </p>
           </div>
@@ -117,11 +112,11 @@ export default function CreatorDashboardPage() {
           <button
             onClick={handleClaim}
             disabled={!isConnected || formattedClaimable === 0 || isClaiming || isWaitingClaim}
-            className="py-3 px-7 sketch-btn-primary text-slate-950 font-bold text-lg flex items-center justify-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+            className="py-3 px-7 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-base flex items-center justify-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed shrink-0 transition-colors shadow-sm"
           >
             {isClaiming || isWaitingClaim ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin text-black" />
                 <span>Claiming ETH...</span>
               </>
             ) : (

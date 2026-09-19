@@ -180,7 +180,7 @@ export default function DocsPage() {
               </div>
             ))}
 
-            <div className="pt-4 border-t border-[#1a6336] text-[11px] font-mono space-y-1.5 text-slate-400">
+            <div className="pt-4 border-t border-zinc-800 text-[11px] font-mono space-y-1.5 text-slate-400">
               <div className="flex justify-between">
                 <span>Network</span>
                 <span className="text-slate-200 font-semibold">Robinhood Chain</span>
@@ -205,7 +205,7 @@ export default function DocsPage() {
 
           {/* 1. OVERVIEW */}
           <section id="overview" className="scroll-mt-24 space-y-4">
-            <div className="border-b border-[#1a6336] pb-3">
+            <div className="border-b border-zinc-800 pb-3">
               <h2 className="text-2xl font-black text-white">Protocol Overview</h2>
               <p className="text-xs text-slate-400">Non-custodial token launch and decentralized trading protocol on Robinhood Chain</p>
             </div>
@@ -368,7 +368,7 @@ export default function DocsPage() {
 
           {/* 4. TRADING & PRICING */}
           <section id="trading" className="scroll-mt-24 space-y-4">
-            <div className="border-b border-[#1a6336] pb-3">
+            <div className="border-b border-zinc-800 pb-3">
               <h2 className="text-2xl font-black text-white">2. Trading & Bonding Curve Mechanics</h2>
               <p className="text-xs text-slate-400">Continuous algorithmic pricing and automated swap execution</p>
             </div>
@@ -562,7 +562,7 @@ export default function DocsPage() {
 
           {/* 8. CREATOR DASHBOARD */}
           <section id="creator-guide" className="scroll-mt-24 space-y-4">
-            <div className="border-b border-[#1a6336] pb-3">
+            <div className="border-b border-zinc-800 pb-3">
               <h2 className="text-2xl font-black text-white">6. Creator Dashboard</h2>
               <p className="text-xs text-slate-400">Track trading volume and claim accrued ETH royalties with 1 click</p>
             </div>

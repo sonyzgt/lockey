@@ -34,25 +34,25 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${inter.variable} ${patrickHand.variable} ${kalam.variable} font-sans bg-[#05140b] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-emerald-400 selection:text-slate-950`}
+        className={`${inter.variable} ${patrickHand.variable} ${kalam.variable} font-sans bg-[#090a0f] text-zinc-100 min-h-screen flex flex-col antialiased selection:bg-yellow-400 selection:text-black`}
       >
         <Web3Provider>
           <Navbar />
           <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {children}
           </main>
-          <footer className="border-t-2 border-dashed border-emerald-800/60 bg-[#06180d] py-8 mt-16">
+          <footer className="border-t border-zinc-800/80 bg-[#0c0d12] py-6 mt-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-5 text-xs">
-              {/* Network Badge in Emerald Style */}
-              <div className="sketch-badge flex items-center space-x-2 text-emerald-100 px-4 py-1.5 bg-[#0c2e1b] border border-emerald-600/50">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="font-hand text-base font-bold text-white tracking-wide">
+              {/* Network Badge in Flat Yellow Style */}
+              <div className="flex items-center space-x-2 text-zinc-200 px-3.5 py-1.5 bg-zinc-900/90 border border-yellow-500/25 rounded-lg shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
+                <span className="font-semibold text-sm text-white tracking-wide">
                   Robinhood Chain (Pons v2)
                 </span>
-                <span className="text-emerald-500">•</span>
-                <span className="font-mono text-xs text-emerald-300">ID: 4663</span>
-                <span className="text-emerald-500">•</span>
-                <span className="font-mono text-xs text-emerald-200 font-bold">ETH Native</span>
+                <span className="text-zinc-600">•</span>
+                <span className="font-mono text-xs text-yellow-400 font-semibold">ID: 4663</span>
+                <span className="text-zinc-600">•</span>
+                <span className="font-mono text-xs text-zinc-300 font-bold">ETH Native</span>
               </div>
 
               {/* Official Twitter / X Link */}
@@ -60,16 +60,16 @@ export default function RootLayout({
                 href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="sketch-btn-secondary px-4 py-2 flex items-center space-x-2.5 text-emerald-200 hover:text-white font-hand font-bold text-base group transition-all"
+                className="sketch-btn-secondary px-3.5 py-1.5 flex items-center space-x-2 text-yellow-400 hover:text-white font-medium text-xs rounded-lg transition-all"
               >
                 <svg
-                  className="w-4 h-4 fill-current text-emerald-400 group-hover:text-emerald-200 transition-colors"
+                  className="w-3.5 h-3.5 fill-current text-yellow-400 group-hover:text-white transition-colors"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
                 >
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
-                <span>@lockey</span>
+                <span className="font-semibold">@lockey</span>
               </a>
             </div>
           </footer>

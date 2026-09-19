@@ -1,14 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
-  <defs>
-    <linearGradient id="lockey-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#34d399"/>
-      <stop offset="50%" stop-color="#10b981"/>
-      <stop offset="100%" stop-color="#059669"/>
-    </linearGradient>
-  </defs>
-  <rect x="8" y="8" width="84" height="84" rx="22" fill="#0c2e1b" stroke="url(#lockey-grad)" stroke-width="4"/>
-  <path d="M35 44 V33 C35 24 41 18 50 18 C59 18 65 24 65 33 V44" fill="none" stroke="#34d399" stroke-width="7" stroke-linecap="round"/>
-  <rect x="25" y="42" width="50" height="40" rx="10" fill="url(#lockey-grad)"/>
-  <circle cx="50" cy="56" r="5" fill="#06180e"/>
-  <path d="M47.5 57 L45 72 H55 L52.5 57 Z" fill="#06180e"/>
+  <rect x="6" y="6" width="88" height="88" rx="16" fill="#181920" stroke="#EAB308" stroke-width="3"/>
+  <path d="M34 44 V33 C34 24.16 41.16 17 50 17 C58.84 17 66 24.16 66 33 V44" fill="none" stroke="#FACC15" stroke-width="7" stroke-linecap="round"/>
+  <rect x="24" y="43" width="52" height="42" rx="10" fill="#FACC15"/>
+  <circle cx="50" cy="60" r="5" fill="#090A0F"/>
+  <path d="M47.5 61 L45 74 H55 L52.5 61 Z" fill="#090A0F"/>
 </svg>
