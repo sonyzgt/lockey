@@ -41,14 +41,9 @@ export function Navbar() {
               alt="LOCKEY Logo"
               className="w-11 h-11 object-contain rounded-lg transition-transform group-hover:scale-105"
             />
-            <div>
-              <span className="text-xl font-extrabold text-white tracking-tight group-hover:text-yellow-400 transition">
-                LOCKEY
-              </span>
-              <span className="block text-[10px] text-yellow-500 font-mono tracking-wider uppercase">
-                Robinhood Chain • 4663
-              </span>
-            </div>
+            <span className="text-xl font-extrabold text-white tracking-tight group-hover:text-yellow-400 transition">
+              LOCKEY
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
