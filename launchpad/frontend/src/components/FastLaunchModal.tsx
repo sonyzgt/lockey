@@ -26,7 +26,6 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
   const [devBuyEth, setDevBuyEth] = useState("");
   const [creatorFeePercent, setCreatorFeePercent] = useState<number>(1);
   const [website, setWebsite] = useState("");
-  const [buybackEnabled, setBuybackEnabled] = useState(false);
   const [statusError, setStatusError] = useState<string | null>(null);
 
   // Initialize or reset from tweet
@@ -43,7 +42,6 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
 
       const tweetPostLink = tweet.tweetUrl || (tweet.author?.username ? `https://x.com/${tweet.author.username}` : "");
       setWebsite(tweetPostLink);
-      setBuybackEnabled(false);
 
       setDevBuyEth("");
       setStatusError(null);
@@ -159,7 +157,7 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
         },
         creatorFeeRecipient: address,
         creatorTaxBps: Math.min(Math.max(Math.round(creatorFeePercent * 100), 0), 1000),
-        buybackEnabled: buybackEnabled,
+        buybackEnabled: false,
         expectedEconomics: fallbackEconomics,
         salt,
       };
@@ -375,25 +373,6 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
             </div>
           </div>
 
-          {/* 5-Year Buyback & Vesting Toggle (Disabled by default) */}
-          <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
-            <div className="space-y-0.5 pr-2">
-              <span className="text-xs font-semibold text-white block">
-                Auto Buyback &amp; 5-Year Vesting
-              </span>
-              <span className="text-[11px] text-zinc-400 block font-sans">
-                {buybackEnabled
-                  ? "Trading fees buy back supply locked in 5-year vesting."
-                  : "Disabled (Recommended for community narrative launches)"}
-              </span>
-            </div>
-            <input
-              type="checkbox"
-              checked={buybackEnabled}
-              onChange={(e) => setBuybackEnabled(e.target.checked)}
-              className="w-4 h-4 rounded accent-yellow-400 cursor-pointer shrink-0"
-            />
-          </div>
 
           {/* Error Message */}
           {statusError && (

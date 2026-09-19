@@ -25,7 +25,6 @@ export default function CreateTokenPage() {
   
   // Custom Creator Royalty Rate Selection (0% to 10%)
   const [creatorFeePercent, setCreatorFeePercent] = useState<number>(1); // Default 1%
-  const [buybackEnabled, setBuybackEnabled] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Optional Initial Dev Buy (in ETH)
@@ -316,7 +315,7 @@ export default function CreateTokenPage() {
         },
         creatorFeeRecipient: address,
         creatorTaxBps: Math.min(Math.max(Math.round(creatorFeePercent * 100), 0), 1000),
-        buybackEnabled,
+        buybackEnabled: false,
         expectedEconomics: fallbackEconomics,
         salt,
       };
@@ -445,21 +444,7 @@ export default function CreateTokenPage() {
               </div>
             </div>
 
-            {/* Buyback & Vesting Toggle */}
-            <div className="p-4 sketch-surface flex items-center justify-between">
-              <div className="space-y-0.5">
-                <span className="text-sm font-hand font-bold text-white block">Auto Buyback & 5-Year Vesting</span>
-                <span className="text-xs font-hand text-slate-400 block">
-                  A portion of trading fees is used for token buyback & locked in 5-year vesting.
-                </span>
-              </div>
-              <input
-                type="checkbox"
-                checked={buybackEnabled}
-                onChange={(e) => setBuybackEnabled(e.target.checked)}
-                className="w-5 h-5 rounded accent-sky-500 cursor-pointer"
-              />
-            </div>
+
 
             <div>
               <label className="block text-base font-hand font-bold text-slate-200 mb-1">
