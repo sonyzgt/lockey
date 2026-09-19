@@ -182,6 +182,8 @@ function extractSuggestedToken(text: string): { name: string; symbol: string } {
   };
 }
 
+import { TRACKED_ACCOUNTS } from "@/config/trackedAccounts";
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
@@ -191,14 +193,15 @@ export async function POST(req: NextRequest) {
           .filter(Boolean)
       : null;
 
-    const usernames =
-      (body.usernames as string[] | undefined) ||
-      (envAccounts && envAccounts.length > 0 ? envAccounts : [
-        "elonmusk",
-        "VitalikButerin",
-        "cz_binance",
-        "whale_alert",
-      ]);
+    const allConfiguredAccounts = [
+      ...(envAccounts || []),
+      ...(body.usernames || []),
+      ...TRACKED_ACCOUNTS,
+    ].map((u) => u.trim().replace("@", "")).filter(Boolean);
+
+    // Deduplicate accounts
+    const uniqueAccounts = Array.from(new Set(allConfiguredAccounts));
+
     const customQuery = (body.query as string | undefined)?.trim();
     const clientBearer = (body.bearerToken as string | undefined)?.trim();
 
@@ -217,12 +220,28 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Twitter API v2 Search Query has a max limit of 512 characters.
+    // Each 'from:username OR ' takes ~15-20 characters.
+    // We safely batch up to 15 accounts per request, rotating through the 1000+ list over time:
+    const CHUNK_SIZE = 15;
+    let selectedAccounts = uniqueAccounts;
+
+    if (uniqueAccounts.length > CHUNK_SIZE && !customQuery) {
+      const totalChunks = Math.ceil(uniqueAccounts.length / CHUNK_SIZE);
+      const rotationIndex = Math.floor(Date.now() / (30 * 1000)) % totalChunks;
+      const start = rotationIndex * CHUNK_SIZE;
+      selectedAccounts = uniqueAccounts.slice(start, start + CHUNK_SIZE);
+      if (selectedAccounts.length === 0) {
+        selectedAccounts = uniqueAccounts.slice(0, CHUNK_SIZE);
+      }
+    }
+
     // Build Twitter API v2 Search Query
     let queryParam = "";
     if (customQuery) {
       queryParam = `${customQuery} -is:retweet`;
     } else {
-      const fromClauses = usernames
+      const fromClauses = selectedAccounts
         .map((u) => `from:${u.replace("@", "")}`)
         .join(" OR ");
       queryParam = `(${fromClauses}) -is:retweet`;
