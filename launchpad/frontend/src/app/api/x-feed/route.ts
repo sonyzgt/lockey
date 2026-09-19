@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { TRACKED_ACCOUNTS } from "@/config/trackedAccounts";
+import { getStoredTweets } from "@/lib/tweetDb";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -147,6 +148,18 @@ function extractSuggestedToken(text: string): { name: string; symbol: string } {
   };
 }
 
+function mergeWithStoredTweets(incoming: ParsedTweet[]): ParsedTweet[] {
+  const stored = getStoredTweets(50);
+  const combinedMap = new Map<string, ParsedTweet>();
+  stored.forEach((t) => combinedMap.set(t.id, t));
+  incoming.forEach((t) => {
+    if (!combinedMap.has(t.id)) combinedMap.set(t.id, t);
+  });
+  return Array.from(combinedMap.values()).sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  ).slice(0, 80);
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
@@ -248,7 +261,7 @@ export async function POST(req: NextRequest) {
         warning: isCreditsDepleted
           ? "Twitter API credits depleted on developer.x.com. Streaming from 1,000+ tracked accounts."
           : `X API returned HTTP ${xRes.status}. Streaming from 1,000+ tracked accounts.`,
-        tweets: generateDynamicFeed(uniqueAccounts),
+        tweets: mergeWithStoredTweets(generateDynamicFeed(uniqueAccounts)),
       });
     }
 
@@ -301,7 +314,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       isMock: false,
-      tweets: parsedTweets,
+      tweets: mergeWithStoredTweets(parsedTweets),
     });
   } catch (error: unknown) {
     console.error("Error in /api/x-feed:", error);

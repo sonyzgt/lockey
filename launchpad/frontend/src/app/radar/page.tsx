@@ -89,16 +89,76 @@ export default function RadarPage() {
     }
   }, []);
 
-  // Initial fetch
+  const [isSseConnected, setIsSseConnected] = useState(false);
+
+  // 1. Real-time Webhook Stream (Server-Sent Events)
+  useEffect(() => {
+    let es: EventSource | null = null;
+    try {
+      es = new EventSource("/api/stream");
+
+      es.onopen = () => {
+        setIsSseConnected(true);
+      };
+
+      es.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === "tweet" && data.tweet) {
+            const incomingTweet: ParsedTweet = data.tweet;
+
+            setNewTweetIds((old) => {
+              const updated = new Set(old);
+              updated.add(incomingTweet.id);
+              return updated;
+            });
+
+            setTweets((prev) => {
+              const existingMap = new Map(prev.map((t) => [t.id, t]));
+              existingMap.set(incomingTweet.id, incomingTweet);
+              return Array.from(existingMap.values())
+                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                .slice(0, 80);
+            });
+
+            setLastScannedTime(new Date().toLocaleTimeString());
+          } else if (data.type === "history" && Array.isArray(data.tweets) && data.tweets.length > 0) {
+            setTweets((prev) => {
+              if (prev.length === 0) return data.tweets;
+              const existingMap = new Map(prev.map((t) => [t.id, t]));
+              data.tweets.forEach((t: ParsedTweet) => existingMap.set(t.id, t));
+              return Array.from(existingMap.values())
+                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                .slice(0, 80);
+            });
+            setIsInitialLoading(false);
+          }
+        } catch (e) {
+          console.error("Error parsing SSE event:", e);
+        }
+      };
+
+      es.onerror = () => {
+        setIsSseConnected(false);
+      };
+    } catch (e) {
+      console.warn("SSE connection error:", e);
+    }
+
+    return () => {
+      if (es) es.close();
+    };
+  }, []);
+
+  // 2. Initial fetch & background sync
   useEffect(() => {
     fetchFeed();
   }, [fetchFeed]);
 
-  // Real-time automatic background polling every 12 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       fetchFeed();
-    }, 12000);
+    }, 15000);
 
     return () => clearInterval(timer);
   }, [fetchFeed]);
@@ -134,8 +194,8 @@ export default function RadarPage() {
                   <span className="text-xl">⚡</span>
                 </h1>
                 <span className="flex items-center space-x-1.5 px-3 py-0.5 sketch-badge bg-[#0c2e1b] text-emerald-300 font-hand font-bold text-xs border border-emerald-500/50">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                  <span>Auto-Refresh Active (12s)</span>
+                  <span className={`w-2 h-2 rounded-full ${isSseConnected ? "bg-emerald-400 animate-ping" : "bg-emerald-400"}`}></span>
+                  <span>{isSseConnected ? "🔴 Live Stream Active" : "Auto-Refresh Active"}</span>
                 </span>
               </div>
               <p className="text-sm font-hand text-emerald-200/90 mt-1">
