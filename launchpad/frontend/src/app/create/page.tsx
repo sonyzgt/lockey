@@ -25,7 +25,7 @@ export default function CreateTokenPage() {
   
   // Custom Creator Royalty Rate Selection (0% to 10%)
   const [creatorFeePercent, setCreatorFeePercent] = useState<number>(1); // Default 1%
-  const [buybackEnabled, setBuybackEnabled] = useState<boolean>(true);
+  const [buybackEnabled, setBuybackEnabled] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Optional Initial Dev Buy (in ETH)
@@ -47,6 +47,7 @@ export default function CreateTokenPage() {
       const qDesc = searchParams.get("desc") || searchParams.get("description");
       const qLogo = searchParams.get("logo") || searchParams.get("imageUrl");
       const qTwitter = searchParams.get("twitter");
+      const qWebsite = searchParams.get("website");
 
       if (qName) setName(qName);
       if (qSymbol) setSymbol(qSymbol);
@@ -56,6 +57,11 @@ export default function CreateTokenPage() {
         setImagePreview(qLogo);
       }
       if (qTwitter) setTwitter(qTwitter);
+      if (qWebsite) {
+        setWebsite(qWebsite);
+      } else if (qTwitter) {
+        setWebsite(qTwitter);
+      }
     }
   }, []);
 

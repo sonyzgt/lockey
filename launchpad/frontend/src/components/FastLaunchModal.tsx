@@ -25,6 +25,8 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
   const [description, setDescription] = useState("");
   const [devBuyEth, setDevBuyEth] = useState("");
   const [creatorFeePercent, setCreatorFeePercent] = useState<number>(1);
+  const [website, setWebsite] = useState("");
+  const [buybackEnabled, setBuybackEnabled] = useState(false);
   const [statusError, setStatusError] = useState<string | null>(null);
 
   // Initialize or reset from tweet
@@ -38,6 +40,11 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
 
       const tweetSource = tweet.tweetUrl ? `\n\nInspired by @${tweet.author.username}: ${tweet.tweetUrl}` : "";
       setDescription(`"${tweet.text}"${tweetSource}`);
+
+      const tweetPostLink = tweet.tweetUrl || (tweet.author?.username ? `https://x.com/${tweet.author.username}` : "");
+      setWebsite(tweetPostLink);
+      setBuybackEnabled(false);
+
       setDevBuyEth("");
       setStatusError(null);
     }
@@ -147,12 +154,12 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
           twitter: tweet.tweetUrl || `https://x.com/${tweet.author.username}`,
           telegram: "",
           discord: "",
-          website: "",
+          website: website.trim() || tweet.tweetUrl || (tweet.author.username ? `https://x.com/${tweet.author.username}` : ""),
           farcaster: "",
         },
         creatorFeeRecipient: address,
         creatorTaxBps: Math.min(Math.max(Math.round(creatorFeePercent * 100), 0), 1000),
-        buybackEnabled: true,
+        buybackEnabled: buybackEnabled,
         expectedEconomics: fallbackEconomics,
         salt,
       };
@@ -307,6 +314,20 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
             </div>
           </div>
 
+          {/* Website / Tweet Post Link */}
+          <div>
+            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
+              Website / Tweet Post Link
+            </label>
+            <input
+              type="url"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              placeholder="https://x.com/..."
+              className="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-700/80 text-xs font-mono text-zinc-200 focus:outline-none focus:border-yellow-400 transition-colors"
+            />
+          </div>
+
           {/* Initial Dev Buy */}
           <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
             <div>
@@ -352,6 +373,26 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* 5-Year Buyback & Vesting Toggle (Disabled by default) */}
+          <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <div className="space-y-0.5 pr-2">
+              <span className="text-xs font-semibold text-white block">
+                Auto Buyback &amp; 5-Year Vesting
+              </span>
+              <span className="text-[11px] text-zinc-400 block font-sans">
+                {buybackEnabled
+                  ? "Trading fees buy back supply locked in 5-year vesting."
+                  : "Disabled (Recommended for community narrative launches)"}
+              </span>
+            </div>
+            <input
+              type="checkbox"
+              checked={buybackEnabled}
+              onChange={(e) => setBuybackEnabled(e.target.checked)}
+              className="w-4 h-4 rounded accent-yellow-400 cursor-pointer shrink-0"
+            />
           </div>
 
           {/* Error Message */}
