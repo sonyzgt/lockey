@@ -46,18 +46,6 @@ export function Navbar() {
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-            <Link
-              href="/"
-              className="text-zinc-300 hover:text-yellow-400 transition-colors flex items-center space-x-1.5"
-            >
-              <span>X Radar</span>
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-400"></span>
-              </span>
-            </Link>
-          </nav>
         </div>
 
         <div className="flex items-center space-x-3">
