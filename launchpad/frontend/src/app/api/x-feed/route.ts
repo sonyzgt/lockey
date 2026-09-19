@@ -185,14 +185,22 @@ function extractSuggestedToken(text: string): { name: string; symbol: string } {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    const clientBearer = (body.bearerToken as string | undefined)?.trim();
-    const usernames = (body.usernames as string[] | undefined) || [
-      "elonmusk",
-      "VitalikButerin",
-      "cz_binance",
-      "whale_alert",
-    ];
+    const envAccounts = process.env.X_TARGET_ACCOUNTS
+      ? process.env.X_TARGET_ACCOUNTS.split(",")
+          .map((s) => s.trim().replace("@", ""))
+          .filter(Boolean)
+      : null;
+
+    const usernames =
+      (body.usernames as string[] | undefined) ||
+      (envAccounts && envAccounts.length > 0 ? envAccounts : [
+        "elonmusk",
+        "VitalikButerin",
+        "cz_binance",
+        "whale_alert",
+      ]);
     const customQuery = (body.query as string | undefined)?.trim();
+    const clientBearer = (body.bearerToken as string | undefined)?.trim();
 
     const bearerToken =
       clientBearer ||
