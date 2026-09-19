@@ -94,58 +94,61 @@ export default function RadarPage() {
   // 1. Real-time Webhook Stream (Server-Sent Events)
   useEffect(() => {
     let es: EventSource | null = null;
-    try {
-      es = new EventSource("/api/stream");
+    const timer = setTimeout(() => {
+      try {
+        es = new EventSource("/api/stream");
 
-      es.onopen = () => {
-        setIsSseConnected(true);
-      };
+        es.onopen = () => {
+          setIsSseConnected(true);
+        };
 
-      es.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          if (data.type === "tweet" && data.tweet) {
-            const incomingTweet: ParsedTweet = data.tweet;
+        es.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            if (data.type === "tweet" && data.tweet) {
+              const incomingTweet: ParsedTweet = data.tweet;
 
-            setNewTweetIds((old) => {
-              const updated = new Set(old);
-              updated.add(incomingTweet.id);
-              return updated;
-            });
+              setNewTweetIds((old) => {
+                const updated = new Set(old);
+                updated.add(incomingTweet.id);
+                return updated;
+              });
 
-            setTweets((prev) => {
-              const existingMap = new Map(prev.map((t) => [t.id, t]));
-              existingMap.set(incomingTweet.id, incomingTweet);
-              return Array.from(existingMap.values())
-                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                .slice(0, 80);
-            });
+              setTweets((prev) => {
+                const existingMap = new Map(prev.map((t) => [t.id, t]));
+                existingMap.set(incomingTweet.id, incomingTweet);
+                return Array.from(existingMap.values())
+                  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                  .slice(0, 80);
+              });
 
-            setLastScannedTime(new Date().toLocaleTimeString());
-          } else if (data.type === "history" && Array.isArray(data.tweets) && data.tweets.length > 0) {
-            setTweets((prev) => {
-              if (prev.length === 0) return data.tweets;
-              const existingMap = new Map(prev.map((t) => [t.id, t]));
-              data.tweets.forEach((t: ParsedTweet) => existingMap.set(t.id, t));
-              return Array.from(existingMap.values())
-                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                .slice(0, 80);
-            });
-            setIsInitialLoading(false);
+              setLastScannedTime(new Date().toLocaleTimeString());
+            } else if (data.type === "history" && Array.isArray(data.tweets) && data.tweets.length > 0) {
+              setTweets((prev) => {
+                if (prev.length === 0) return data.tweets;
+                const existingMap = new Map(prev.map((t) => [t.id, t]));
+                data.tweets.forEach((t: ParsedTweet) => existingMap.set(t.id, t));
+                return Array.from(existingMap.values())
+                  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                  .slice(0, 80);
+              });
+              setIsInitialLoading(false);
+            }
+          } catch (e) {
+            console.error("Error parsing SSE event:", e);
           }
-        } catch (e) {
-          console.error("Error parsing SSE event:", e);
-        }
-      };
+        };
 
-      es.onerror = () => {
-        setIsSseConnected(false);
-      };
-    } catch (e) {
-      console.warn("SSE connection error:", e);
-    }
+        es.onerror = () => {
+          setIsSseConnected(false);
+        };
+      } catch (e) {
+        console.warn("SSE connection error:", e);
+      }
+    }, 200);
 
     return () => {
+      clearTimeout(timer);
       if (es) es.close();
     };
   }, []);
@@ -158,7 +161,7 @@ export default function RadarPage() {
   useEffect(() => {
     const timer = setInterval(() => {
       fetchFeed();
-    }, 15000);
+    }, 30000);
 
     return () => clearInterval(timer);
   }, [fetchFeed]);
@@ -185,7 +188,7 @@ export default function RadarPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start sm:items-center space-x-4">
             <div className="w-14 h-14 rounded-sketch border-2 border-emerald-400 bg-[#0c2e1b] shadow-sketch p-1 shrink-0 flex items-center justify-center text-emerald-300">
-              <Radar className={`w-8 h-8 text-emerald-400 ${isScanning ? "animate-spin" : "animate-pulse"}`} />
+              <Radar className="w-8 h-8 text-emerald-400" />
             </div>
             <div>
               <div className="flex items-center space-x-3">
@@ -207,8 +210,8 @@ export default function RadarPage() {
           {/* Live Scanner Activity Indicator */}
           <div className="flex items-center space-x-3 self-end sm:self-center">
             <div className="px-3.5 py-1.5 sketch-surface text-xs font-mono text-emerald-300 flex items-center space-x-2 border border-emerald-700/50">
-              <span className={`w-2 h-2 rounded-full ${isScanning ? "bg-amber-400 animate-ping" : "bg-emerald-400 animate-pulse"}`}></span>
-              <span>{isScanning ? "Scanning X..." : `Last scan: ${lastScannedTime}`}</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span>{isSseConnected ? "Live Feed Synced" : `Last update: ${lastScannedTime}`}</span>
             </div>
           </div>
         </div>

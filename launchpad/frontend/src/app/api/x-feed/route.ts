@@ -164,10 +164,16 @@ async function fetchFromTwitterApiIo(accounts: string[], apiKey: string): Promis
   const promises = accounts.map(async (handle) => {
     try {
       const cleanHandle = handle.replace("@", "").trim();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3500);
+
       const res = await fetch(`https://api.twitterapi.io/twitter/user/last_tweets?userName=${encodeURIComponent(cleanHandle)}`, {
         headers: { "X-API-Key": apiKey },
         cache: "no-store",
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
+
       if (!res.ok) return [];
       const json = await res.json();
       if (json.status !== "success" || !json.data?.tweets) return [];
@@ -214,7 +220,6 @@ async function fetchFromTwitterApiIo(accounts: string[], apiKey: string): Promis
         };
       });
     } catch (err) {
-      console.error(`Error fetching tweets for @${handle}:`, err);
       return [];
     }
   });
@@ -241,10 +246,10 @@ export async function POST(req: NextRequest) {
     // Deduplicate accounts
     const uniqueAccounts = Array.from(new Set(allConfiguredAccounts));
 
-    const customQuery = (body.query as string | undefined)?.trim();
-    const clientBearer = (body.bearerToken as string | undefined)?.trim();
+    // 1. Instant response from local cache/database
+    const stored = getStoredTweets(60);
 
-    // 1. Prioritize TwitterAPI.io API Key
+    // 2. Prioritize TwitterAPI.io API Key
     const twitterApiIoKey = process.env.TWITTERAPI_IO_KEY || body.twitterApiKey;
     if (twitterApiIoKey) {
       const BATCH_SIZE = 5;
@@ -253,6 +258,26 @@ export async function POST(req: NextRequest) {
       const start = rotationIndex * BATCH_SIZE;
       const targetBatch = uniqueAccounts.slice(start, start + BATCH_SIZE);
 
+      // If we already have stored tweets, return immediately (sub-10ms) and sync in background!
+      if (stored.length > 0) {
+        fetchFromTwitterApiIo(
+          targetBatch.length > 0 ? targetBatch : uniqueAccounts.slice(0, BATCH_SIZE),
+          twitterApiIoKey
+        ).then((newRealTweets) => {
+          if (newRealTweets.length > 0) {
+            saveBatchStoredTweets(newRealTweets);
+          }
+        }).catch(() => {});
+
+        return NextResponse.json({
+          success: true,
+          isMock: false,
+          source: "twitterapi.io",
+          tweets: stored,
+        });
+      }
+
+      // If stored is empty, do a fast initial fetch
       const realTweets = await fetchFromTwitterApiIo(
         targetBatch.length > 0 ? targetBatch : uniqueAccounts.slice(0, BATCH_SIZE),
         twitterApiIoKey
