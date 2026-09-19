@@ -69,12 +69,6 @@ export function Navbar() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-400"></span>
               </span>
             </Link>
-            <Link
-              href="/docs"
-              className="text-zinc-300 hover:text-yellow-400 transition-colors flex items-center space-x-1"
-            >
-              <span>Docs</span>
-            </Link>
           </nav>
         </div>
 

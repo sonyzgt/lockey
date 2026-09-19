@@ -36,20 +36,20 @@ function CodeSnippet({ caption, code }: CodeBlockProps) {
   };
 
   return (
-    <div className="clay-surface overflow-hidden my-4">
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-sky-500/15 bg-[#051325]/80">
-        <span className="text-[11px] font-mono text-sky-300 font-semibold flex items-center space-x-2">
-          <Terminal className="w-3.5 h-3.5 text-sky-400" />
+    <div className="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden my-4 shadow-sm">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800 bg-zinc-900/90">
+        <span className="text-[11px] font-mono text-yellow-400 font-semibold flex items-center space-x-2">
+          <Terminal className="w-3.5 h-3.5 text-yellow-400" />
           <span>{caption}</span>
         </span>
         <button
           onClick={handleCopy}
-          className="flex items-center space-x-1.5 text-[11px] text-slate-300 hover:text-white px-2.5 py-1 rounded-lg clay-btn-secondary font-mono"
+          className="flex items-center space-x-1.5 text-[11px] text-zinc-300 hover:text-white px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 font-mono transition-colors"
         >
           {copied ? (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-emerald-400 font-bold">Copied</span>
+              <Check className="w-3.5 h-3.5 text-yellow-400" />
+              <span className="text-yellow-400 font-bold">Copied</span>
             </>
           ) : (
             <>
@@ -59,8 +59,8 @@ function CodeSnippet({ caption, code }: CodeBlockProps) {
           )}
         </button>
       </div>
-      <div className="p-4 overflow-x-auto bg-[#020813]">
-        <pre className="font-mono text-xs text-slate-200 leading-relaxed">
+      <div className="p-4 overflow-x-auto bg-black/60">
+        <pre className="font-mono text-xs text-zinc-200 leading-relaxed">
           <code>{code}</code>
         </pre>
       </div>
@@ -70,9 +70,9 @@ function CodeSnippet({ caption, code }: CodeBlockProps) {
 
 function FormulaBox({ title, formula }: { title: string; formula: string }) {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 clay-surface my-3 text-xs font-mono gap-2">
-      <span className="text-slate-300 font-medium">{title}</span>
-      <code className="text-sky-300 px-3 py-1.5 clay-inset text-[11px]">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-zinc-900/80 border border-zinc-800 rounded-xl my-3 text-xs font-mono gap-2">
+      <span className="text-zinc-300 font-medium">{title}</span>
+      <code className="text-yellow-400 px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-[11px]">
         {formula}
       </code>
     </div>
@@ -120,36 +120,36 @@ export default function DocsPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-10 pb-24">
-      {/* Claymorphic Hero Banner */}
-      <div className="relative clay-card p-8 sm:p-12 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[30rem] h-[30rem] bg-emerald-400/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+      {/* Hero Banner */}
+      <div className="relative p-8 sm:p-12 overflow-hidden bg-[#121318] border border-zinc-800 rounded-2xl shadow-sm">
+        <div className="absolute top-0 right-0 w-[30rem] h-[30rem] bg-yellow-400/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
         <div className="relative z-10 max-w-3xl space-y-5">
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 clay-badge text-emerald-300 text-xs font-mono font-bold">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-md bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-mono font-bold">
+            <span className="w-2 h-2 rounded-full bg-yellow-400 shadow-[0_0_8px_rgba(250,204,21,0.5)] animate-pulse"></span>
             <span>Official LOCKEY Documentation • Robinhood Chain ID 4663</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight drop-shadow-md">
-            How It Works & Protocol Reference <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-green-300 to-lime-400">LOCKEY</span>
+          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+            How It Works &amp; Protocol Reference <span className="text-yellow-400">LOCKEY</span>
           </h1>
 
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+          <p className="text-zinc-300 text-sm sm:text-base leading-relaxed font-sans">
             Complete guide to the LOCKEY token launchpad ecosystem powered by Pons v2 on Robinhood Chain: fair-launch token deployment with 0.0005 ETH launch fee, constant-product bonding curves, automated Uniswap v4 graduation (Zero-Rug Guarantee), creator royalties, and developer smart contract integration.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3 text-xs font-mono">
-            <span className="px-3.5 py-1.5 clay-badge text-slate-200">
-              Gas Asset: <strong className="text-emerald-300">Native ETH</strong>
+            <span className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300">
+              Gas Asset: <strong className="text-yellow-400">Native ETH</strong>
             </span>
-            <span className="px-3.5 py-1.5 clay-badge text-slate-200">
-              Total Supply: <strong className="text-emerald-300">1,000,000,000 Fixed</strong>
+            <span className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300">
+              Total Supply: <strong className="text-yellow-400">1,000,000,000 Fixed</strong>
             </span>
-            <span className="px-3.5 py-1.5 clay-badge text-slate-200">
-              Graduation Target: <strong className="text-purple-300">4.2 ETH</strong>
+            <span className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300">
+              Graduation Target: <strong className="text-yellow-300">4.2 ETH</strong>
             </span>
-            <span className="px-3.5 py-1.5 clay-badge text-slate-200">
-              LP Liquidity: <strong className="text-rose-300">Automated Uniswap v4 Migration</strong>
+            <span className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300">
+              LP Liquidity: <strong className="text-zinc-100">Automated Uniswap v4 Migration</strong>
             </span>
           </div>
         </div>
@@ -157,12 +157,12 @@ export default function DocsPage() {
 
       {/* Main Container: Sidebar + Content */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Sticky Claymorphic Sidebar */}
+        {/* Sticky Sidebar Navigation */}
         <aside className="lg:col-span-3 lg:sticky lg:top-24 space-y-6">
-          <div className="clay-card p-5 space-y-5">
+          <div className="p-5 space-y-5 bg-[#121318] border border-zinc-800 rounded-2xl shadow-sm">
             {navGroups.map((group, gIdx) => (
               <div key={gIdx} className="space-y-1.5">
-                <p className="text-[10px] font-mono tracking-widest uppercase text-emerald-400/80 px-2.5 py-1 font-bold">
+                <p className="text-[10px] font-mono tracking-widest uppercase text-yellow-400 font-bold px-2.5 py-1">
                   {group.label}
                 </p>
                 <ul className="space-y-1">
@@ -170,7 +170,7 @@ export default function DocsPage() {
                     <li key={item.id}>
                       <a
                         href={`#${item.id}`}
-                        className="block px-3 py-1.5 rounded-xl text-xs text-slate-400 hover:text-white hover:bg-emerald-500/10 hover:shadow-inner transition font-medium"
+                        className="block px-3 py-1.5 rounded-lg text-xs text-zinc-400 hover:text-yellow-400 hover:bg-zinc-900 transition font-medium"
                       >
                         {item.label}
                       </a>
@@ -180,18 +180,18 @@ export default function DocsPage() {
               </div>
             ))}
 
-            <div className="pt-4 border-t border-zinc-800 text-[11px] font-mono space-y-1.5 text-slate-400">
+            <div className="pt-4 border-t border-zinc-800 text-[11px] font-mono space-y-1.5 text-zinc-400">
               <div className="flex justify-between">
                 <span>Network</span>
-                <span className="text-slate-200 font-semibold">Robinhood Chain</span>
+                <span className="text-zinc-200 font-semibold">Robinhood Chain</span>
               </div>
               <div className="flex justify-between">
                 <span>Chain ID</span>
-                <span className="text-emerald-300 font-semibold">4663</span>
+                <span className="text-yellow-400 font-semibold">4663</span>
               </div>
               <div className="flex justify-between">
                 <span>Gas Asset</span>
-                <span className="text-emerald-300 font-semibold">Native ETH</span>
+                <span className="text-yellow-400 font-semibold">Native ETH</span>
               </div>
             </div>
           </div>
@@ -219,7 +219,7 @@ export default function DocsPage() {
               </p>
 
               <div className="p-5 clay-surface text-xs space-y-2.5">
-                <span className="font-bold text-emerald-400 flex items-center space-x-2 text-sm">
+                <span className="font-bold text-yellow-400 flex items-center space-x-2 text-sm">
                   <ShieldCheck className="w-4 h-4" />
                   <span>Key Architectural Guarantees</span>
                 </span>
@@ -242,11 +242,11 @@ export default function DocsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
               <div className="p-5 clay-surface space-y-3">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono font-bold">
+                <div className="w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 font-mono font-bold">
                   01
                 </div>
                 <h3 className="text-white font-bold text-sm flex items-center space-x-2">
-                  <Wallet className="w-4 h-4 text-emerald-400" />
+                  <Wallet className="w-4 h-4 text-yellow-400" />
                   <span>Connect Web3 Wallet</span>
                 </h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
@@ -255,11 +255,11 @@ export default function DocsPage() {
               </div>
 
               <div className="p-5 clay-surface space-y-3">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono font-bold">
+                <div className="w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 font-mono font-bold">
                   02
                 </div>
                 <h3 className="text-white font-bold text-sm flex items-center space-x-2">
-                  <Rocket className="w-4 h-4 text-emerald-400" />
+                  <Rocket className="w-4 h-4 text-yellow-400" />
                   <span>Launch Token Instantly (/create)</span>
                 </h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
@@ -354,12 +354,12 @@ export default function DocsPage() {
 
               <div className="p-5 clay-surface space-y-3 text-xs">
                 <h4 className="font-bold text-white text-sm flex items-center space-x-2">
-                  <Sparkles className="w-4 h-4 text-emerald-400" />
+                  <Sparkles className="w-4 h-4 text-yellow-400" />
                   <span>Launch Features & Guarantees:</span>
                 </h4>
                 <ul className="list-disc list-inside space-y-2 text-slate-300">
                   <li><strong>Optional Opening Buy:</strong> Creators can specify an initial ETH buy amount in the exact atomic transaction to purchase supply before public discovery.</li>
-                  <li><strong>Instant Auto-Redirect:</strong> As soon as the transaction confirms on Robinhood Chain, the frontend listens to the <code className="text-emerald-300 font-mono">TokenLaunched</code> event log and immediately routes you to the live trading page.</li>
+                  <li><strong>Instant Auto-Redirect:</strong> As soon as the transaction confirms on Robinhood Chain, the frontend listens to the <code className="text-yellow-400 font-mono">TokenLaunched</code> event log and immediately routes you to the live trading page.</li>
                   <li><strong>Fixed Supply & Reserved Pool:</strong> Entire supply of <strong>1,000,000,000 tokens</strong> is minted to the curve; the reserved share is automatically migrated and permanently locked into Uniswap v4 upon graduation.</li>
                 </ul>
               </div>
@@ -395,7 +395,7 @@ export default function DocsPage() {
                 <h4 className="font-bold text-white text-sm">How to Trade on the Platform</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div className="p-4 clay-surface space-y-2">
-                    <span className="font-bold text-emerald-400 text-sm block">Buying Tokens (Buy)</span>
+                    <span className="font-bold text-yellow-400 text-sm block">Buying Tokens (Buy)</span>
                     <p className="text-slate-300 leading-relaxed">
                       1. Enter the amount of native ETH you want to spend.<br />
                       2. Click <strong>Buy with ETH</strong>. Tokens are transferred directly into your wallet and spot price adjusts upward.<br />
@@ -415,7 +415,7 @@ export default function DocsPage() {
 
               <div className="p-4 clay-surface text-xs space-y-2">
                 <span className="font-bold text-white text-sm flex items-center space-x-2">
-                  <BarChart2 className="w-4 h-4 text-emerald-400" />
+                  <BarChart2 className="w-4 h-4 text-yellow-400" />
                   <span>Real-Time Charts & On-Chain Activity Feed:</span>
                 </span>
                 <p className="text-slate-300 leading-relaxed">
@@ -464,13 +464,13 @@ export default function DocsPage() {
                       <td className="p-3.5 text-yellow-400 font-bold">2 seconds</td>
                       <td className="p-3.5 text-yellow-400 font-bold">3.00%</td>
                       <td className="p-3.5">Minimal tax</td>
-                      <td className="p-3.5 text-emerald-400">Safe for entry</td>
+                      <td className="p-3.5 text-yellow-400">Safe for entry</td>
                     </tr>
-                    <tr className="bg-emerald-500/10">
-                      <td className="p-3.5 text-emerald-400 font-bold">5+ seconds</td>
-                      <td className="p-3.5 text-emerald-400 font-bold">0.00%</td>
+                    <tr className="bg-yellow-400/5">
+                      <td className="p-3.5 text-yellow-400 font-bold">5+ seconds</td>
+                      <td className="p-3.5 text-yellow-400 font-bold">0.00%</td>
                       <td className="p-3.5">Protection concluded</td>
-                      <td className="p-3.5 text-emerald-400 font-bold">Standard trading fees only (1% - 5%)</td>
+                      <td className="p-3.5 text-yellow-400 font-bold">Standard trading fees only (1% - 5%)</td>
                     </tr>
                   </tbody>
                 </table>
@@ -544,14 +544,14 @@ export default function DocsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
                 <div className="p-4 clay-surface">
                   <span className="text-slate-400 block mb-1 font-semibold">Creator Royalty</span>
-                  <span className="text-emerald-300 font-bold text-base">1.00% – 5.00%</span>
+                  <span className="text-yellow-400 font-bold text-base">1.00% – 5.00%</span>
                   <p className="text-[11px] text-slate-400 font-sans mt-1.5 leading-relaxed">
                     Configured by the creator at launch. Safely accrued in Pons FeeEscrow and withdrawable anytime.
                   </p>
                 </div>
                 <div className="p-4 clay-surface">
                   <span className="text-slate-400 block mb-1 font-semibold">Protocol Fee</span>
-                  <span className="text-emerald-300 font-bold text-base">0.50% – 1.00%</span>
+                  <span className="text-yellow-400 font-bold text-base">0.50% – 1.00%</span>
                   <p className="text-[11px] text-slate-400 font-sans mt-1.5 leading-relaxed">
                     Dedicated to Robinhood Chain RPC node infrastructure maintenance and onchain indexers.
                   </p>
@@ -569,12 +569,12 @@ export default function DocsPage() {
 
             <div className="text-sm text-slate-300 leading-relaxed space-y-4">
               <p>
-                Token creators can access the <strong>Creator Royalty Fees</strong> dashboard (<Link href="/creator-dashboard" className="text-emerald-400 hover:underline">/creator-dashboard</Link>) to monitor token metrics.
+                Token creators can access the <strong>Creator Royalty Fees</strong> dashboard (<Link href="/creator-dashboard" className="text-yellow-400 hover:underline">/creator-dashboard</Link>) to monitor token metrics.
               </p>
 
               <div className="p-5 clay-surface space-y-3 text-xs">
                 <h4 className="font-bold text-white text-sm flex items-center space-x-2">
-                  <Coins className="w-4 h-4 text-emerald-400" />
+                  <Coins className="w-4 h-4 text-yellow-400" />
                   <span>How to Claim Your Creator Royalties:</span>
                 </h4>
                 <ol className="list-decimal list-inside space-y-2 text-slate-300">
@@ -660,7 +660,7 @@ export default function DocsPage() {
                   </tr>
                   <tr>
                     <td className="p-3.5 text-slate-400">Native Asset</td>
-                    <td className="p-3.5 text-emerald-400 font-bold">Ether (ETH) — 18 Decimals</td>
+                    <td className="p-3.5 text-yellow-400 font-bold">Ether (ETH) — 18 Decimals</td>
                   </tr>
                   <tr>
                     <td className="p-3.5 text-slate-400">Public RPC</td>
@@ -713,7 +713,7 @@ export default function DocsPage() {
                       onClick={() => copyText(`c-${idx}`, item.address)}
                       className="p-2 clay-btn-secondary text-slate-200"
                     >
-                      {copiedContract === `c-${idx}` ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copiedContract === `c-${idx}` ? <Check className="w-3.5 h-3.5 text-yellow-400" /> : <Copy className="w-3.5 h-3.5" />}
                     </button>
                   </div>
                 </div>
