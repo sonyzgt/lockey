@@ -22,7 +22,7 @@ function extractSuggestedToken(text: string): { name: string; symbol: string } {
 
   const words = clean.split(/\s+/).filter((w) => w.length > 2);
   if (words.length === 0) {
-    return { name: "Vana Narrative", symbol: "VNARR" };
+    return { name: "Lockey Narrative", symbol: "LOCK" };
   }
 
   const name = words.slice(0, 2).join(" ");
@@ -52,7 +52,7 @@ function normalizeRawTweet(raw: any): ParsedTweet | null {
   const user = raw.user || raw.author || {};
   const username = (user.screen_name || user.username || raw.username || "crypto_insider").replace("@", "");
   const name = user.name || raw.author_name || username;
-  const avatar = user.profile_image_url_https || user.profile_image_url || "/vana-logo.png";
+  const avatar = user.profile_image_url_https || user.profile_image_url || "/lockey-logo.svg";
   const verified = Boolean(user.verified || user.is_blue_verified);
 
   // Media extraction
@@ -163,7 +163,7 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   return NextResponse.json({
     status: "active",
-    service: "Vana TwitterAPI.io Webhook Endpoint",
+    service: "Lockey TwitterAPI.io Webhook Endpoint",
     url: req.nextUrl.href,
     message: "Send POST requests with tweet payloads from TwitterAPI.io here.",
   });

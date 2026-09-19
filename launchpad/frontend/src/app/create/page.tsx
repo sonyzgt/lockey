@@ -218,7 +218,7 @@ export default function CreateTokenPage() {
       if (tokenAddr) {
         redirectedRef.current = true;
 
-        // Persist token to platform backend & local cache so it appears exclusively in Vana Explorer
+        // Persist token to platform backend & local cache so it appears exclusively in Lockey Explorer
         try {
           fetch("/api/tokens", {
             method: "POST",
@@ -236,7 +236,7 @@ export default function CreateTokenPage() {
             }),
           }).catch((e) => console.warn("Could not register token to platform API:", e));
 
-          const existingLocal = JSON.parse(localStorage.getItem("vana_platform_tokens") || "[]");
+          const existingLocal = JSON.parse(localStorage.getItem("lockey_platform_tokens") || "[]");
           if (!existingLocal.some((t: { token?: string }) => t.token?.toLowerCase() === tokenAddr?.toLowerCase())) {
             existingLocal.unshift({
               token: tokenAddr,
@@ -249,14 +249,14 @@ export default function CreateTokenPage() {
               txHash,
               createdAt: new Date().toISOString(),
             });
-            localStorage.setItem("vana_platform_tokens", JSON.stringify(existingLocal));
+            localStorage.setItem("lockey_platform_tokens", JSON.stringify(existingLocal));
           }
         } catch (err) {
           console.warn("Failed to cache platform token:", err);
         }
 
         toast.success(
-          "Token Launched Successfully via Vana!",
+          "Token Launched Successfully via Lockey!",
           "Entering live token curve trading page...",
           txHash
         );
@@ -759,7 +759,7 @@ export default function CreateTokenPage() {
             </div>
 
             <p className="text-sm font-hand text-slate-300 line-clamp-3 leading-relaxed">
-              {description.trim() || "Your token description will appear here on Vana Token Explorer..."}
+              {description.trim() || "Your token description will appear here on Lockey Token Explorer..."}
             </p>
 
             <div className="p-3 sketch-surface space-y-2 text-xs font-hand">
@@ -778,7 +778,7 @@ export default function CreateTokenPage() {
             </div>
 
             <div className="pt-2 text-center text-xs font-hand text-slate-400">
-              ✏️ This token will be exclusively tracked on Vana Explorer
+              ✏️ This token will be exclusively tracked on Lockey Explorer
             </div>
           </div>
         </div>

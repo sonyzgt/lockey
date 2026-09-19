@@ -127,15 +127,15 @@ export default function DocsPage() {
         <div className="relative z-10 max-w-3xl space-y-5">
           <div className="inline-flex items-center space-x-2 px-4 py-1.5 clay-badge text-emerald-300 text-xs font-mono font-bold">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
-            <span>Official VANA Documentation • Robinhood Chain ID 4663</span>
+            <span>Official LOCKEY Documentation • Robinhood Chain ID 4663</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight drop-shadow-md">
-            How It Works & Protocol Reference <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-green-300 to-lime-400">VANA</span>
+            How It Works & Protocol Reference <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-green-300 to-lime-400">LOCKEY</span>
           </h1>
 
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Complete guide to the VANA token launchpad ecosystem powered by Pons v2 on Robinhood Chain: fair-launch token deployment with 0.0005 ETH launch fee, constant-product bonding curves, automated Uniswap v4 graduation (Zero-Rug Guarantee), creator royalties, and developer smart contract integration.
+            Complete guide to the LOCKEY token launchpad ecosystem powered by Pons v2 on Robinhood Chain: fair-launch token deployment with 0.0005 ETH launch fee, constant-product bonding curves, automated Uniswap v4 graduation (Zero-Rug Guarantee), creator royalties, and developer smart contract integration.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3 text-xs font-mono">
@@ -212,10 +212,10 @@ export default function DocsPage() {
 
             <div className="text-sm text-slate-300 leading-relaxed space-y-4">
               <p>
-                <strong>VANA</strong> is a next-generation fair-launch token protocol built natively on <strong>Robinhood Chain (Chain ID: 4663)</strong>. It is designed to solve classic problems found in conventional Web3 launchpads: steep initial liquidity capital requirements, developer rug-pull risks, sniper bot exploitation, and high gas fees.
+                <strong>LOCKEY</strong> is a next-generation fair-launch token protocol built natively on <strong>Robinhood Chain (Chain ID: 4663)</strong>. It is designed to solve classic problems found in conventional Web3 launchpads: steep initial liquidity capital requirements, developer rug-pull risks, sniper bot exploitation, and high gas fees.
               </p>
               <p>
-                VANA operates in a strictly <em>non-custodial</em> manner — the platform never holds user private keys or custodial funds. Every token creation, swap transaction, and creator royalty claim is executed directly onchain by Robinhood Chain smart contracts through explicit cryptographic signatures from your Web3 wallet (OKX Wallet, MetaMask, Rabby, etc.).
+                LOCKEY operates in a strictly <em>non-custodial</em> manner — the platform never holds user private keys or custodial funds. Every token creation, swap transaction, and creator royalty claim is executed directly onchain by Robinhood Chain smart contracts through explicit cryptographic signatures from your Web3 wallet (OKX Wallet, MetaMask, Rabby, etc.).
               </p>
 
               <div className="p-5 clay-surface text-xs space-y-2.5">
@@ -236,7 +236,7 @@ export default function DocsPage() {
           {/* 2. HOW IT WORKS (STEP-BY-STEP) */}
           <section id="how-it-works" className="scroll-mt-24 space-y-4">
             <div className="border-b border-sky-500/20 pb-3">
-              <h2 className="text-2xl font-black text-white">How VANA Works (Step-by-Step)</h2>
+              <h2 className="text-2xl font-black text-white">How LOCKEY Works (Step-by-Step)</h2>
               <p className="text-xs text-slate-400">End-to-end token lifecycle from creation to DEX liquidity graduation</p>
             </div>
 
@@ -434,7 +434,7 @@ export default function DocsPage() {
 
             <div className="text-sm text-slate-300 leading-relaxed space-y-4">
               <p>
-                To prevent MEV bots and sniper scripts from extracting capital from human retail buyers on block 0, VANA enforces a mathematical <strong>Decaying Snipe Tax</strong> directly inside the bonding curve smart contract for the first 5 seconds post-launch:
+                To prevent MEV bots and sniper scripts from extracting capital from human retail buyers on block 0, LOCKEY enforces a mathematical <strong>Decaying Snipe Tax</strong> directly inside the bonding curve smart contract for the first 5 seconds post-launch:
               </p>
 
               <div className="overflow-x-auto clay-surface p-1">
@@ -617,10 +617,10 @@ export default function DocsPage() {
                 <span>Important Considerations</span>
               </span>
               <ul className="list-disc list-inside space-y-1.5 text-slate-300">
-                <li>All tokens launched on VANA are user-created and permissionless.</li>
+                <li>All tokens launched on LOCKEY are user-created and permissionless.</li>
                 <li>Token names and tickers can be duplicated by other creators. Always verify the <strong>token contract address</strong> before trading.</li>
                 <li>Cryptocurrency assets are volatile and trading involves market risk. Never trade more than you can afford to lose.</li>
-                <li>VANA is decentralized open-source software and does not provide financial or investment advice.</li>
+                <li>LOCKEY is decentralized open-source software and does not provide financial or investment advice.</li>
               </ul>
             </div>
           </section>

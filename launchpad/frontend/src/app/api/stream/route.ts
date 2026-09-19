@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
       // 1. Send initial connected event
       const initialPayload = JSON.stringify({
         type: "connected",
-        message: "Live stream connected to Vana Radar",
+        message: "Live stream connected to Lockey Radar",
         timestamp: new Date().toISOString(),
       });
       controller.enqueue(encoder.encode(`data: ${initialPayload}\n\n`));

@@ -17,12 +17,12 @@ const kalam = Kalam({
 });
 
 export const metadata: Metadata = {
-  title: "VANA Launchpad | Robinhood Chain",
-  description: "Create meme tokens, trade on Pons v2 bonding curves, and graduate liquidity to Uniswap v4 on Robinhood Chain.",
+  title: "LOCKEY | Live Narrative Radar & Fast Launch",
+  description: "Monitor crypto narratives and launch tokens instantly on Robinhood Chain.",
   icons: {
-    icon: "/vana-logo.png",
-    shortcut: "/vana-logo.png",
-    apple: "/vana-logo.png",
+    icon: "/lockey-logo.svg",
+    shortcut: "/lockey-logo.svg",
+    apple: "/lockey-logo.svg",
   },
 };
 
@@ -57,7 +57,7 @@ export default function RootLayout({
 
               {/* Official Twitter / X Link */}
               <a
-                href="https://x.com/vana_family"
+                href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="sketch-btn-secondary px-4 py-2 flex items-center space-x-2.5 text-emerald-200 hover:text-white font-hand font-bold text-base group transition-all"
@@ -69,7 +69,7 @@ export default function RootLayout({
                 >
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
-                <span>@vana_family</span>
+                <span>@lockey</span>
               </a>
             </div>
           </footer>

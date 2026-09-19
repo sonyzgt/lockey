@@ -21,15 +21,15 @@ export function Navbar() {
             <div className="relative w-11 h-11 rounded-sketch border-2 border-emerald-400 bg-[#0c2e1b] flex items-center justify-center shadow-sketch-sm group-hover:rotate-3 transition-transform">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/vana-logo.png"
-                alt="VANA Logo"
-                className="w-full h-full object-cover rounded-sketch"
+                src="/lockey-logo.svg"
+                alt="LOCKEY Logo"
+                className="w-full h-full object-cover rounded-sketch p-1"
               />
             </div>
             <div>
               <div className="flex items-center space-x-1.5">
                 <span className="text-2xl font-kalam font-bold text-white tracking-wide group-hover:text-emerald-300 transition">
-                  VANA
+                  LOCKEY
                 </span>
                 <span className="text-xs px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-hand border border-emerald-500/40">
                   doodle
@@ -69,16 +69,16 @@ export function Navbar() {
 
         <div className="flex items-center space-x-3">
           <a
-            href="https://x.com/vana_family"
+            href="https://x.com"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:flex items-center space-x-2 px-3 py-1.5 sketch-btn-secondary text-xs font-hand text-emerald-200 hover:text-white"
-            title="Follow @vana_family on X"
+            title="Follow @lockey on X"
           >
             <svg className="w-3.5 h-3.5 fill-current text-emerald-400" viewBox="0 0 24 24">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
-            <span className="font-bold">@vana_family</span>
+            <span className="font-bold">@lockey</span>
           </a>
 
           <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 sketch-badge bg-[#0c2e1b] text-xs font-mono text-emerald-200 border border-emerald-600/40">

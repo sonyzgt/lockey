@@ -35,9 +35,9 @@ export function XScannerSettingsModal({
   // Load from localStorage on mount
   useEffect(() => {
     try {
-      const savedToken = localStorage.getItem("vana_x_bearer_token") || "";
-      const savedAccounts = localStorage.getItem("vana_x_tracked_accounts");
-      const savedInterval = localStorage.getItem("vana_x_refresh_interval");
+      const savedToken = localStorage.getItem("lockey_x_bearer_token") || "";
+      const savedAccounts = localStorage.getItem("lockey_x_tracked_accounts");
+      const savedInterval = localStorage.getItem("lockey_x_refresh_interval");
 
       if (savedToken) setBearerToken(savedToken);
       if (savedAccounts) {
@@ -71,9 +71,9 @@ export function XScannerSettingsModal({
 
   const handleSave = () => {
     try {
-      localStorage.setItem("vana_x_bearer_token", bearerToken.trim());
-      localStorage.setItem("vana_x_tracked_accounts", JSON.stringify(trackedAccounts));
-      localStorage.setItem("vana_x_refresh_interval", refreshInterval.toString());
+      localStorage.setItem("lockey_x_bearer_token", bearerToken.trim());
+      localStorage.setItem("lockey_x_tracked_accounts", JSON.stringify(trackedAccounts));
+      localStorage.setItem("lockey_x_refresh_interval", refreshInterval.toString());
     } catch (e) {
       console.warn("Could not save to localStorage:", e);
     }
@@ -93,7 +93,7 @@ export function XScannerSettingsModal({
 
   const handleClearToken = () => {
     setBearerToken("");
-    localStorage.removeItem("vana_x_bearer_token");
+    localStorage.removeItem("lockey_x_bearer_token");
   };
 
   return (

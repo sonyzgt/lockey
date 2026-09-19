@@ -123,7 +123,7 @@ export default function AdminDashboardPage() {
           <span className="px-3 py-1 clay-badge text-[11px] font-mono text-sky-300">
             CONFIDENTIAL PROTOCOL ROUTE • /083826007503
           </span>
-          <h1 className="text-3xl font-black text-white">VANA Protocol Fee Vault</h1>
+          <h1 className="text-3xl font-black text-white">LOCKEY Protocol Fee Vault</h1>
           <p className="text-sm text-slate-400 max-w-md mx-auto">
             This dashboard is strictly reserved for the protocol owner to withdraw accumulated platform revenue.
           </p>

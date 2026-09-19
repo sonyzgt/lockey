@@ -343,7 +343,7 @@ export default function TokenDetailPage() {
           </div>
           <div className="space-y-1">
             <div className="flex items-center space-x-3 flex-wrap gap-y-1">
-              <h1 className="text-3xl sm:text-4xl font-kalam font-bold text-white tracking-wide">{tokenName || "Memuat..."}</h1>
+              <h1 className="text-3xl sm:text-4xl font-kalam font-bold text-white tracking-wide">{tokenName || "Loading..."}</h1>
               <span className="sketch-badge px-2.5 py-0.5 bg-yellow-400/20 text-yellow-300 font-mono text-xs font-bold uppercase border border-yellow-400/40">${tokenSymbol || "..."}</span>
               {isTradingOnV4 ? (
                 <span className="px-2.5 py-1 rounded-sketch text-xs font-hand font-bold bg-purple-500/20 text-purple-300 border-2 border-purple-500/40 shadow-sketch-sm flex items-center space-x-1">

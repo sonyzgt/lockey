@@ -30,11 +30,11 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
   // Initialize or reset from tweet
   useEffect(() => {
     if (tweet) {
-      setName(tweet.suggestedToken?.name || "Vana Narrative");
-      setSymbol(tweet.suggestedToken?.symbol || "VNARR");
+      setName(tweet.suggestedToken?.name || "Lockey Narrative");
+      setSymbol(tweet.suggestedToken?.symbol || "LOCK");
       
       const mediaImage = tweet.media?.[0]?.url;
-      setLogoUrl(mediaImage || tweet.author.profileImageUrl || "/vana-logo.png");
+      setLogoUrl(mediaImage || tweet.author.profileImageUrl || "/lockey-logo.svg");
 
       const tweetSource = tweet.tweetUrl ? `\n\nInspired by @${tweet.author.username}: ${tweet.tweetUrl}` : "";
       setDescription(`"${tweet.text}"${tweetSource}`);
@@ -289,11 +289,11 @@ export function FastLaunchModal({ tweet, isOpen, onClose }: FastLaunchModalProps
               <div className="w-11 h-11 rounded-sketch border-2 border-emerald-400 bg-[#0c2e1b] overflow-hidden shrink-0 flex items-center justify-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={logoUrl || "/vana-logo.png"}
+                  src={logoUrl || "/lockey-logo.svg"}
                   alt="Preview"
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/vana-logo.png";
+                    (e.target as HTMLImageElement).src = "/lockey-logo.svg";
                   }}
                 />
               </div>

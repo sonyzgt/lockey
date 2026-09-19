@@ -41,7 +41,7 @@ const TEMPLATE_NARRATIVES = [
   { text: "New green frog meta is taking over the feed. The meme dynasty is live. $FROG", symbol: "FROG", name: "Dynasty Frog", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80" },
   { text: "Next autonomous AI agent protocol deployed on Robinhood chain. Code is law. $AGENT", symbol: "AGENT", name: "AI Agent", img: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=800&auto=format&fit=crop&q=80" },
   { text: "Accumulating on the bonding curve while the market is asleep. Alpha is found in early contracts. $ALPHA", symbol: "ALPHA", name: "Curve Alpha", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80" },
-  { text: "Never fade the community. The strongest hands always build the dynasty. $VANA", symbol: "VANA", name: "Vana Lineage", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80" },
+  { text: "Never fade the community. The strongest hands always build the dynasty. $LOCKEY", symbol: "LOCKEY", name: "Lockey Lineage", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80" },
   { text: "10,000,000 supply permanently burned to null address. Absolute scarcity achieved. $BURN", symbol: "BURN", name: "Eternal Burn", img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80" },
   { text: "On-chain signals flashing green. Whales are rotating into new fair launches. $WHALE", symbol: "WHALE", name: "Whale Radar", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80" },
   { text: "Decentralized liquidity pool will graduate soon. Mathematical inevitability. $PONS", symbol: "PONS", name: "Pons Family", img: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop&q=80" },
@@ -131,7 +131,7 @@ function extractSuggestedToken(text: string): { name: string; symbol: string } {
 
   const words = clean.split(/\s+/).filter((w) => w.length > 2);
   if (words.length === 0) {
-    return { name: "Vana Narrative", symbol: "VNARR" };
+    return { name: "Lockey Narrative", symbol: "LOCK" };
   }
 
   const name = words.slice(0, 2).join(" ");
@@ -207,7 +207,7 @@ async function fetchFromTwitterApiIo(accounts: string[], apiKey: string): Promis
             id: author.id || author.id_str || "0",
             name: author.name || username,
             username: username,
-            profileImageUrl: author.profilePicture || author.profile_image_url_https || "/vana-logo.png",
+            profileImageUrl: author.profilePicture || author.profile_image_url_https || "/lockey-logo.svg",
             verified: Boolean(author.isBlueVerified || author.isVerified || author.verified),
           },
           media: mediaList,
