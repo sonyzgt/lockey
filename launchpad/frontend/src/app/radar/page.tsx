@@ -6,7 +6,6 @@ import {
   Radio,
   RefreshCw,
   Settings,
-  Search,
   ExternalLink,
   Rocket,
   Heart,
@@ -15,8 +14,6 @@ import {
   Sparkles,
   AlertCircle,
   CheckCircle2,
-  Filter,
-  Plus,
 } from "lucide-react";
 import { ParsedTweet } from "../api/x-feed/route";
 import { XScannerSettingsModal } from "@/components/XScannerSettingsModal";
@@ -26,8 +23,6 @@ export default function RadarPage() {
   const [tweets, setTweets] = useState<ParsedTweet[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isMock, setIsMock] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedAccount, setSelectedAccount] = useState<string>("all");
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [selectedTweetForLaunch, setSelectedTweetForLaunch] = useState<ParsedTweet | null>(null);
 
@@ -124,24 +119,7 @@ export default function RadarPage() {
     setCountdown(newSettings.refreshInterval || 30);
   };
 
-  const filteredTweets = useMemo(() => {
-    return tweets.filter((t) => {
-      const matchAccount =
-        selectedAccount === "all" ||
-        t.author.username.toLowerCase() === selectedAccount.toLowerCase();
 
-      const q = searchQuery.toLowerCase().trim();
-      const matchQuery =
-        !q ||
-        t.text.toLowerCase().includes(q) ||
-        t.author.name.toLowerCase().includes(q) ||
-        t.author.username.toLowerCase().includes(q) ||
-        t.suggestedToken?.name.toLowerCase().includes(q) ||
-        t.suggestedToken?.symbol.toLowerCase().includes(q);
-
-      return matchAccount && matchQuery;
-    });
-  }, [tweets, selectedAccount, searchQuery]);
 
   const formatTimeAgo = (dateString: string) => {
     try {
@@ -230,64 +208,6 @@ export default function RadarPage() {
         )}
       </div>
 
-      {/* Filter and Tracked Accounts Bar */}
-      <div className="space-y-3">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-          {/* Tracked Accounts Filter Pills */}
-          <div className="flex items-center space-x-2 overflow-x-auto pb-1 max-w-full">
-            <span className="text-xs font-hand font-bold text-emerald-400 flex items-center space-x-1 shrink-0">
-              <Filter className="w-3.5 h-3.5" />
-              <span>Accounts:</span>
-            </span>
-
-            <button
-              onClick={() => setSelectedAccount("all")}
-              className={`px-3 py-1 rounded-sketch text-xs font-hand font-bold transition shrink-0 ${
-                selectedAccount === "all"
-                  ? "sketch-btn-primary text-slate-950"
-                  : "sketch-btn-secondary text-slate-300"
-              }`}
-            >
-              All Feeds ({tweets.length})
-            </button>
-
-            {trackedAccounts.map((handle) => (
-              <button
-                key={handle}
-                onClick={() => setSelectedAccount(handle)}
-                className={`px-3 py-1 rounded-sketch text-xs font-hand font-bold transition shrink-0 ${
-                  selectedAccount.toLowerCase() === handle.toLowerCase()
-                    ? "sketch-btn-primary text-slate-950"
-                    : "sketch-btn-secondary text-slate-300"
-                }`}
-              >
-                @{handle}
-              </button>
-            ))}
-
-            <button
-              onClick={() => setIsSettingsOpen(true)}
-              className="px-2 py-1 rounded-sketch sketch-btn-secondary text-emerald-400 hover:text-white text-xs shrink-0"
-              title="Add more accounts to track"
-            >
-              <Plus className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {/* Search in Feed */}
-          <div className="relative w-full md:w-72">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-400" />
-            <input
-              type="text"
-              placeholder="Search narrative, keywords, ticker..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 sketch-inset text-xs font-hand text-white placeholder:text-emerald-500/60 focus:outline-none"
-            />
-          </div>
-        </div>
-      </div>
-
       {/* Tweets Grid / Feed */}
       {isLoading && tweets.length === 0 ? (
         <div className="sketch-card p-16 text-center space-y-4 bg-[#092214]">
@@ -296,17 +216,17 @@ export default function RadarPage() {
             Scanning X stream for new narratives...
           </p>
         </div>
-      ) : filteredTweets.length === 0 ? (
+      ) : tweets.length === 0 ? (
         <div className="sketch-card p-12 text-center space-y-3 bg-[#092214]">
           <AlertCircle className="w-8 h-8 text-emerald-400 mx-auto opacity-70" />
-          <p className="font-hand text-lg text-emerald-100">No tweets match the selected filter.</p>
+          <p className="font-hand text-lg text-emerald-100">No tweets found in stream.</p>
           <p className="font-hand text-xs text-slate-400">
-            Try adjusting your search query or tracking more accounts in Settings.
+            Check your tracked accounts in Settings.
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredTweets.map((tweet) => {
+          {tweets.map((tweet) => {
             const hasMedia = tweet.media && tweet.media.length > 0;
             const primaryMedia = hasMedia ? tweet.media![0].url : null;
 
