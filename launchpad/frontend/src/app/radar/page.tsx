@@ -1,65 +1,24 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Radar,
-  Radio,
-  RefreshCw,
-  Settings,
   ExternalLink,
   Rocket,
   Heart,
   Repeat,
   MessageCircle,
-  Sparkles,
   AlertCircle,
   CheckCircle2,
+  RefreshCw,
 } from "lucide-react";
 import { ParsedTweet } from "../api/x-feed/route";
-import { XScannerSettingsModal } from "@/components/XScannerSettingsModal";
 import { FastLaunchModal } from "@/components/FastLaunchModal";
 
 export default function RadarPage() {
   const [tweets, setTweets] = useState<ParsedTweet[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isMock, setIsMock] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [selectedTweetForLaunch, setSelectedTweetForLaunch] = useState<ParsedTweet | null>(null);
-
-  // Settings
-  const [bearerToken, setBearerToken] = useState("");
-  const [trackedAccounts, setTrackedAccounts] = useState<string[]>([
-    "elonmusk",
-    "VitalikButerin",
-    "cz_binance",
-    "whale_alert",
-  ]);
-  const [refreshInterval, setRefreshInterval] = useState<number>(30);
-  const [countdown, setCountdown] = useState<number>(30);
-
-  // Load settings from localStorage
-  useEffect(() => {
-    try {
-      const savedToken = localStorage.getItem("vana_x_bearer_token") || "";
-      const savedAccounts = localStorage.getItem("vana_x_tracked_accounts");
-      const savedInterval = localStorage.getItem("vana_x_refresh_interval");
-
-      if (savedToken) setBearerToken(savedToken);
-      if (savedAccounts) {
-        const parsed = JSON.parse(savedAccounts);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setTrackedAccounts(parsed);
-        }
-      }
-      if (savedInterval) {
-        const intervalNum = Number(savedInterval);
-        setRefreshInterval(isNaN(intervalNum) ? 30 : intervalNum);
-        setCountdown(isNaN(intervalNum) ? 30 : intervalNum);
-      }
-    } catch (e) {
-      console.warn("Could not read settings from localStorage:", e);
-    }
-  }, []);
 
   const fetchFeed = useCallback(async () => {
     try {
@@ -67,59 +26,33 @@ export default function RadarPage() {
       const res = await fetch("/api/x-feed", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          bearerToken: bearerToken || undefined,
-          usernames: trackedAccounts,
-        }),
+        body: JSON.stringify({}),
       });
 
       const data = await res.json();
       if (data && Array.isArray(data.tweets)) {
         setTweets(data.tweets);
-        setIsMock(Boolean(data.isMock));
       }
     } catch (err) {
       console.error("Failed to load X feed:", err);
     } finally {
       setIsLoading(false);
     }
-  }, [bearerToken, trackedAccounts]);
+  }, []);
 
   // Initial fetch
   useEffect(() => {
     fetchFeed();
   }, [fetchFeed]);
 
-  // Auto-refresh countdown timer
+  // Quiet background auto-refresh every 30s
   useEffect(() => {
-    if (refreshInterval <= 0) return;
-
-    setCountdown(refreshInterval);
     const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          fetchFeed();
-          return refreshInterval;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+      fetchFeed();
+    }, 30000);
 
     return () => clearInterval(timer);
-  }, [refreshInterval, fetchFeed]);
-
-  const handleSettingsSave = (newSettings: {
-    bearerToken: string;
-    trackedAccounts: string[];
-    refreshInterval: number;
-  }) => {
-    setBearerToken(newSettings.bearerToken);
-    setTrackedAccounts(newSettings.trackedAccounts);
-    setRefreshInterval(newSettings.refreshInterval);
-    setCountdown(newSettings.refreshInterval || 30);
-  };
-
-
+  }, [fetchFeed]);
 
   const formatTimeAgo = (dateString: string) => {
     try {
@@ -139,73 +72,26 @@ export default function RadarPage() {
       <div className="sketch-card p-6 sm:p-8 bg-[#092214] border-2 border-emerald-500 relative">
         <div className="hidden sm:block absolute -top-3 left-12 w-32 h-6 bg-emerald-400/35 border border-dashed border-emerald-400 -rotate-2 pointer-events-none"></div>
 
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="flex items-start sm:items-center space-x-4">
-            <div className="w-14 h-14 rounded-sketch border-2 border-emerald-400 bg-[#0c2e1b] shadow-sketch p-1 shrink-0 flex items-center justify-center text-emerald-300">
-              <Radar className="w-8 h-8 animate-pulse text-emerald-400" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-3">
-                <h1 className="text-3xl sm:text-4xl font-kalam font-bold text-white tracking-wide flex items-center space-x-2">
-                  <span>X Narrative Radar</span>
-                  <span className="text-xl">⚡</span>
-                </h1>
-                <span className="flex items-center space-x-1.5 px-3 py-0.5 sketch-badge bg-[#0c2e1b] text-emerald-300 font-hand font-bold text-xs border border-emerald-500/50">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                  <span>Live Stream</span>
-                </span>
-              </div>
-              <p className="text-sm font-hand text-emerald-200/90 mt-1">
-                Scan breaking posts from key accounts &amp; launch meme tokens instantly on Pons bonding curves (j7tracking style)
-              </p>
-            </div>
+        <div className="flex items-start sm:items-center space-x-4">
+          <div className="w-14 h-14 rounded-sketch border-2 border-emerald-400 bg-[#0c2e1b] shadow-sketch p-1 shrink-0 flex items-center justify-center text-emerald-300">
+            <Radar className="w-8 h-8 animate-pulse text-emerald-400" />
           </div>
-
-          {/* Quick Actions & Countdown */}
-          <div className="flex items-center flex-wrap gap-3">
-            {refreshInterval > 0 && (
-              <div className="px-3.5 py-2 sketch-surface text-xs font-mono text-emerald-300 flex items-center space-x-2">
-                <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-                <span>Auto-refresh in <strong className="text-white">{countdown}s</strong></span>
-              </div>
-            )}
-
-            <button
-              onClick={() => fetchFeed()}
-              disabled={isLoading}
-              className="px-4 py-2 sketch-btn-secondary text-xs font-hand font-bold text-emerald-100 flex items-center space-x-1.5"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 text-emerald-400 ${isLoading ? "animate-spin" : ""}`} />
-              <span>Refresh</span>
-            </button>
-
-            <button
-              onClick={() => setIsSettingsOpen(true)}
-              className="px-4 py-2 sketch-btn-primary text-slate-950 text-xs font-hand font-bold flex items-center space-x-1.5 shadow-sketch-sm"
-            >
-              <Settings className="w-4 h-4" />
-              <span>X API &amp; Accounts</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Demo Notice Banner if no X API key entered */}
-        {isMock && (
-          <div className="mt-5 p-3.5 rounded-sketch bg-[#0c2e1b]/90 border border-emerald-600/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-hand">
-            <div className="flex items-center space-x-2 text-emerald-200">
-              <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>
-                <strong>Live Simulation Feed Active.</strong> Connect your X Developer API Bearer Token to stream 100% live tweets from X!
+          <div>
+            <div className="flex items-center space-x-3">
+              <h1 className="text-3xl sm:text-4xl font-kalam font-bold text-white tracking-wide flex items-center space-x-2">
+                <span>X Narrative Radar</span>
+                <span className="text-xl">⚡</span>
+              </h1>
+              <span className="flex items-center space-x-1.5 px-3 py-0.5 sketch-badge bg-[#0c2e1b] text-emerald-300 font-hand font-bold text-xs border border-emerald-500/50">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>Live Stream</span>
               </span>
             </div>
-            <button
-              onClick={() => setIsSettingsOpen(true)}
-              className="px-3 py-1 sketch-btn-secondary text-xs font-bold text-emerald-300 hover:text-white underline"
-            >
-              Configure X API Key →
-            </button>
+            <p className="text-sm font-hand text-emerald-200/90 mt-1">
+              Live breaking posts from X • Launch meme tokens instantly on Pons bonding curves
+            </p>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Tweets Grid / Feed */}
@@ -220,9 +106,6 @@ export default function RadarPage() {
         <div className="sketch-card p-12 text-center space-y-3 bg-[#092214]">
           <AlertCircle className="w-8 h-8 text-emerald-400 mx-auto opacity-70" />
           <p className="font-hand text-lg text-emerald-100">No tweets found in stream.</p>
-          <p className="font-hand text-xs text-slate-400">
-            Check your tracked accounts in Settings.
-          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -335,13 +218,6 @@ export default function RadarPage() {
           })}
         </div>
       )}
-
-      {/* Settings Modal */}
-      <XScannerSettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        onSave={handleSettingsSave}
-      />
 
       {/* Fast Launch Modal */}
       <FastLaunchModal
